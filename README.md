@@ -13,11 +13,11 @@ Cric Spot is a Flutter application designed for cricket enthusiasts, built with 
 
 ## Screenshots
 
-![Screenshot 1](https://github.com/DarshanAsalaliya/cric_spot/tree/master/screen_shot/Screenshot_3.jpg)
+![Screenshot 1](https://raw.githubusercontent.com/DarshanAsalaliya/cric_spot/master/screen_shot/Screenshot_3.jpg)
 _Create match_
 
-![Screenshot 2](https://github.com/DarshanAsalaliya/cric_spot/tree/master/screen_shot/Screenshot_6.jpg)
+![Screenshot 2](https://raw.githubusercontent.com/DarshanAsalaliya/cric_spot/master/screen_shot/Screenshot_6.jpg)
 _Manage Score_
 
-![Screenshot 3](https://github.com/DarshanAsalaliya/cric_spot/tree/master/screen_shot/Screenshot_4.jpg)
+![Screenshot 3](https://raw.githubusercontent.com/DarshanAsalaliya/cric_spot/master/screen_shot/Screenshot_4.jpg)
 _Show History_
