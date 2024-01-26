@@ -1,16 +1,23 @@
-# cric_spot
+# Cric Spot
 
-A new Flutter project.
+Cric Spot is a Flutter application designed for cricket enthusiasts, built with a focus on user-friendly team management, scorekeeping, and offline functionality. The app employs MobX for efficient state management and utilizes Hive for local database storage, ensuring a seamless experience even without an internet connection.
 
-## Getting Started
+## Features
 
-This project is a starting point for a Flutter application.
+- **Team Creation:** Users can create and manage their cricket teams effortlessly.
+- **Scorekeeping:** Keep track of runs and view detailed scorecards for each match.
 
-A few resources to get you started if this is your first Flutter project:
+- **Offline Capability:** Enjoy uninterrupted access to the application, allowing users to input data and view scores even without an internet connection.
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+- **History:** Explore historical data and review past match details.
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## Screenshots
+
+![Screenshot 1](https://github.com/DarshanAsalaliya/cric_spot/tree/master/screen_shot/Screenshot_3.jpg)
+_Create match_
+
+![Screenshot 2](https://github.com/DarshanAsalaliya/cric_spot/tree/master/screen_shot/Screenshot_6.jpg)
+_Manage Score_
+
+![Screenshot 3](https://github.com/DarshanAsalaliya/cric_spot/tree/master/screen_shot/Screenshot_4.jpg)
+_Show History_

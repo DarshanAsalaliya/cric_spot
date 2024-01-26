@@ -33,8 +33,7 @@ class _ScoreCountPageState extends State<ScoreCountPage> {
     super.initState();
     scoreStore.getAllData(widget.matchId);
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      RenderBox extraBox =
-          extraCheckKey.currentContext!.findRenderObject() as RenderBox;
+      RenderBox extraBox = extraCheckKey.currentContext!.findRenderObject() as RenderBox;
       extraBoxHeight = extraBox.size.height;
       extraBoxWidth = extraBox.size.width;
 
@@ -59,8 +58,7 @@ class _ScoreCountPageState extends State<ScoreCountPage> {
               },
               child: Scaffold(
                 appBar: AppBar(
-                  title: Text(
-                      '${scoreStore.matchData?.firstBatTeamName} vs ${scoreStore.matchData?.secondBatTeamName}'),
+                  title: Text('${scoreStore.matchData?.firstBatTeamName} vs ${scoreStore.matchData?.secondBatTeamName}'),
                   leading: IconButton(
                       onPressed: () {
                         scoreStore.lastSave();
@@ -72,9 +70,7 @@ class _ScoreCountPageState extends State<ScoreCountPage> {
                   actions: [
                     IconButton(
                         onPressed: () {
-                          GoRouter.of(context).pushNamed(
-                              RoutesName.scoreBoard.name,
-                              pathParameters: {"matchId": widget.matchId});
+                          GoRouter.of(context).pushNamed(RoutesName.scoreBoard.name, pathParameters: {"matchId": widget.matchId});
                         },
                         icon: Icon(Icons.scoreboard)),
                     SizedBox(
@@ -83,14 +79,12 @@ class _ScoreCountPageState extends State<ScoreCountPage> {
                   ],
                 ),
                 body: Container(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
+                  padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
                   child: ListView(
                     children: [
                       // 1 : main score card
                       CricCard(
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(8)),
+                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
                           child: Container(
                             padding: const EdgeInsets.all(8),
                             child: Column(
@@ -103,23 +97,15 @@ class _ScoreCountPageState extends State<ScoreCountPage> {
                                             "${scoreStore.currentInning?.batTeamName}, ${scoreStore.currentInning!.isFirstInning! ? '1st' : '2nd'} Inning")),
                                     Expanded(
                                       child: Row(
-                                        mainAxisAlignment: scoreStore
-                                                .currentInning!.isFirstInning!
-                                            ? MainAxisAlignment.center
-                                            : MainAxisAlignment.spaceAround,
+                                        mainAxisAlignment:
+                                            scoreStore.currentInning!.isFirstInning! ? MainAxisAlignment.center : MainAxisAlignment.spaceAround,
                                         children: [
                                           Text("Crr"),
                                           Observer(builder: (_) {
-                                            return scoreStore.currentInning!
-                                                    .isFirstInning!
-                                                ? SizedBox.shrink()
-                                                : Text("Target");
+                                            return scoreStore.currentInning!.isFirstInning! ? SizedBox.shrink() : Text("Target");
                                           }),
                                           Observer(builder: (_) {
-                                            return scoreStore.currentInning!
-                                                    .isFirstInning!
-                                                ? SizedBox.shrink()
-                                                : Text("RR");
+                                            return scoreStore.currentInning!.isFirstInning! ? SizedBox.shrink() : Text("RR");
                                           }),
                                         ],
                                       ),
@@ -130,17 +116,13 @@ class _ScoreCountPageState extends State<ScoreCountPage> {
                                   children: [
                                     Expanded(
                                         child: Row(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.end,
+                                      crossAxisAlignment: CrossAxisAlignment.end,
                                       children: [
                                         Observer(builder: (_) {
                                           return Text(
                                             // "${scoreStore.currentInning?.totalRun} - ${scoreStore.currentInning?.totalWicket}",
                                             "${scoreStore.totalRun} - ${scoreStore.totalWicket}",
-                                            style: context.headlineLarge
-                                                ?.copyWith(
-                                                    color: context
-                                                        .onPrimaryContainer),
+                                            style: context.headlineLarge?.copyWith(color: context.onPrimaryContainer),
                                           );
                                         }),
                                         const SizedBox(
@@ -152,10 +134,7 @@ class _ScoreCountPageState extends State<ScoreCountPage> {
                                               return Text(
                                                 // "(${scoreStore.currentInning!.totalBall! ~/ 6}.${scoreStore.currentInning!.totalBall! % 6})",
                                                 "(${scoreStore.totalBall ~/ 6}.${scoreStore.totalBall % 6})",
-                                                style: context.headlineSmall
-                                                    ?.copyWith(
-                                                        color: context
-                                                            .onSurfaceVariant),
+                                                style: context.headlineSmall?.copyWith(color: context.onSurfaceVariant),
                                               );
                                             }),
                                             const SizedBox(
@@ -167,35 +146,18 @@ class _ScoreCountPageState extends State<ScoreCountPage> {
                                     )),
                                     Expanded(
                                       child: Row(
-                                        mainAxisAlignment: scoreStore
-                                                .currentInning!.isFirstInning!
-                                            ? MainAxisAlignment.center
-                                            : MainAxisAlignment.spaceAround,
+                                        mainAxisAlignment:
+                                            scoreStore.currentInning!.isFirstInning! ? MainAxisAlignment.center : MainAxisAlignment.spaceAround,
                                         children: [
-                                          Text((scoreStore.totalRun /
-                                                  (scoreStore.totalBall / 6))
-                                              .toStringAsFixed(2)),
+                                          Text((scoreStore.totalRun / (scoreStore.totalBall / 6)).toStringAsFixed(2)),
                                           Observer(builder: (_) {
-                                            return scoreStore.currentInning!
-                                                    .isFirstInning!
-                                                ? SizedBox.shrink()
-                                                : Text(scoreStore.target
-                                                    .toString());
+                                            return scoreStore.currentInning!.isFirstInning! ? SizedBox.shrink() : Text(scoreStore.target.toString());
                                           }),
                                           Observer(builder: (_) {
-                                            return scoreStore.currentInning!
-                                                    .isFirstInning!
+                                            return scoreStore.currentInning!.isFirstInning!
                                                 ? SizedBox.shrink()
-                                                : Text(((scoreStore.target -
-                                                            scoreStore
-                                                                .totalRun) /
-                                                        (((int.parse(scoreStore
-                                                                        .matchData!
-                                                                        .over!) *
-                                                                    6) -
-                                                                scoreStore
-                                                                    .totalBall) /
-                                                            6))
+                                                : Text(((scoreStore.target - scoreStore.totalRun) /
+                                                        (((int.parse(scoreStore.matchData!.over!) * 6) - scoreStore.totalBall) / 6))
                                                     .toStringAsFixed(2));
                                           }),
                                         ],
@@ -210,9 +172,7 @@ class _ScoreCountPageState extends State<ScoreCountPage> {
                                     ? SizedBox.shrink()
                                     : Text(
                                         "${scoreStore.matchData?.secondBatTeamName} need ${scoreStore.target - scoreStore.totalRun} runs in ${(int.parse(scoreStore.matchData!.over!) * 6) - scoreStore.totalBall} balls",
-                                        style: context.bodyLarge?.copyWith(
-                                            color: Colors.green,
-                                            fontWeight: FontWeight.w500),
+                                        style: context.bodyLarge?.copyWith(color: Colors.green, fontWeight: FontWeight.w500),
                                       )
                               ],
                             ),
@@ -220,8 +180,7 @@ class _ScoreCountPageState extends State<ScoreCountPage> {
                       // 2 : batsman score card
 
                       CricCard(
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(8)),
+                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
                           child: Container(
                             padding: const EdgeInsets.all(8.0),
                             child: Column(
@@ -258,50 +217,35 @@ class _ScoreCountPageState extends State<ScoreCountPage> {
                                     Row(
                                       children: [
                                         SizedBox(
-                                          width: MediaQuery.of(context)
-                                                  .size
-                                                  .width *
-                                              0.11,
+                                          width: MediaQuery.of(context).size.width * 0.11,
                                           child: const Text(
                                             "O",
                                             textAlign: TextAlign.end,
                                           ),
                                         ),
                                         SizedBox(
-                                          width: MediaQuery.of(context)
-                                                  .size
-                                                  .width *
-                                              0.11,
+                                          width: MediaQuery.of(context).size.width * 0.11,
                                           child: const Text(
                                             "M",
                                             textAlign: TextAlign.end,
                                           ),
                                         ),
                                         SizedBox(
-                                          width: MediaQuery.of(context)
-                                                  .size
-                                                  .width *
-                                              0.11,
+                                          width: MediaQuery.of(context).size.width * 0.11,
                                           child: const Text(
                                             "R",
                                             textAlign: TextAlign.end,
                                           ),
                                         ),
                                         SizedBox(
-                                          width: MediaQuery.of(context)
-                                                  .size
-                                                  .width *
-                                              0.11,
+                                          width: MediaQuery.of(context).size.width * 0.11,
                                           child: const Text(
                                             "W",
                                             textAlign: TextAlign.end,
                                           ),
                                         ),
                                         SizedBox(
-                                          width: MediaQuery.of(context)
-                                                  .size
-                                                  .width *
-                                              0.13,
+                                          width: MediaQuery.of(context).size.width * 0.13,
                                           child: const Text(
                                             "ER",
                                             textAlign: TextAlign.end,
@@ -326,8 +270,7 @@ class _ScoreCountPageState extends State<ScoreCountPage> {
                           )),
                       // 3 : current over
                       CricCard(
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(8)),
+                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
                           child: Container(
                             padding: EdgeInsets.all(8.0),
                             child: Row(
@@ -340,12 +283,7 @@ class _ScoreCountPageState extends State<ScoreCountPage> {
                                       return ListView(
                                         shrinkWrap: true,
                                         scrollDirection: Axis.horizontal,
-                                        children: [
-                                          ...scoreStore.currentOver
-                                              .map(((e) =>
-                                                  overCircleCard(rundata: e)))
-                                              .toList()
-                                        ],
+                                        children: [...scoreStore.currentOver.map(((e) => overCircleCard(rundata: e))).toList()],
                                       );
                                     }),
                                   ),
@@ -358,119 +296,93 @@ class _ScoreCountPageState extends State<ScoreCountPage> {
                         children: [
                           CricCard(
                               key: extraCheckKey,
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(8)),
+                              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
                               child: Container(
                                 padding: EdgeInsets.only(right: 8),
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    scoreStore.matchData!.isWideBall!
-                                        ? checkBoxWidget(
-                                            childText: "Wide",
-                                            value: scoreStore.wide)
-                                        : SizedBox.shrink(),
+                                    scoreStore.matchData!.isWideBall! ? checkBoxWidget(childText: "Wide", value: scoreStore.wide) : SizedBox.shrink(),
                                     scoreStore.matchData!.isNoball!
-                                        ? checkBoxWidget(
-                                            childText: "No Ball",
-                                            value: scoreStore.noBall)
+                                        ? checkBoxWidget(childText: "No Ball", value: scoreStore.noBall)
                                         : SizedBox.shrink(),
-                                    checkBoxWidget(
-                                        childText: "Byes",
-                                        value: scoreStore.byes),
-                                    checkBoxWidget(
-                                        childText: "Leg Byes",
-                                        value: scoreStore.legByes),
-                                    checkBoxWidget(
-                                        childText: "Wicket",
-                                        value: scoreStore.wicket),
+                                    checkBoxWidget(childText: "Byes", value: scoreStore.byes),
+                                    checkBoxWidget(childText: "Leg Byes", value: scoreStore.legByes),
+                                    checkBoxWidget(childText: "Wicket", value: scoreStore.wicket),
                                   ],
                                 ),
                               )),
                           CricCard(
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(8)),
+                              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
                               child: SizedBox(
                                 height: extraBoxHeight - 8,
-                                width: MediaQuery.of(context).size.width -
-                                    extraBoxWidth -
-                                    24,
-                                child: GridView.count(
-                                    childAspectRatio: 1.40,
-                                    crossAxisCount: 3,
-                                    children: [
-                                      countRunCard(
-                                          child: "0",
-                                          onTap: () {
-                                            runCount(0);
-                                          }),
-                                      countRunCard(
-                                          child: "1",
-                                          onTap: () {
-                                            runCount(1);
-                                          }),
-                                      countRunCard(
-                                          child: "2",
-                                          onTap: () {
-                                            runCount(2);
-                                          }),
-                                      countRunCard(
-                                          child: "3",
-                                          onTap: () {
-                                            runCount(3);
-                                          }),
-                                      countRunCard(
-                                          child: "4",
-                                          onTap: () {
-                                            runCount(4);
-                                          }),
-                                      countRunCard(
-                                          child: "5",
-                                          onTap: () {
-                                            runCount(5);
-                                          }),
-                                      countRunCard(
-                                          child: "6",
-                                          onTap: () {
-                                            runCount(6);
-                                          }),
-                                      countRunCard(child: "...", onTap: () {}),
-                                      InkWell(
-                                        onTap: () {
-                                          final runsDetail = scoreStore
-                                              .currentOver.last
-                                              .split('-');
-                                          cricAlertDialog(context,
-                                              child: Text("You want to undo"),
-                                              title: Text("Are you sure?"),
-                                              confirmationButton: TextButton(
-                                                  onPressed: () {
-                                                    scoreStore.undoRun(
-                                                        runsDetail[1],
-                                                        int.parse(
-                                                            runsDetail[0]));
-                                                    GoRouter.of(context).pop();
-                                                  },
-                                                  child: Text("Undo")));
-                                        },
-                                        child: CricOutlineCard(
-                                            color: context.primary,
-                                            shape: RoundedRectangleBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(10),
-                                              side: BorderSide(
-                                                width: 1,
-                                                color: context.outline,
-                                              ),
-                                            ),
-                                            child: Center(
-                                                child: Text(
-                                              "undo",
-                                              style: TextStyle(
-                                                  color: context.onPrimary),
-                                            ))),
-                                      )
-                                    ]),
+                                width: MediaQuery.of(context).size.width - extraBoxWidth - 24,
+                                child: GridView.count(childAspectRatio: 1.40, crossAxisCount: 3, children: [
+                                  countRunCard(
+                                      child: "0",
+                                      onTap: () {
+                                        runCount(0);
+                                      }),
+                                  countRunCard(
+                                      child: "1",
+                                      onTap: () {
+                                        runCount(1);
+                                      }),
+                                  countRunCard(
+                                      child: "2",
+                                      onTap: () {
+                                        runCount(2);
+                                      }),
+                                  countRunCard(
+                                      child: "3",
+                                      onTap: () {
+                                        runCount(3);
+                                      }),
+                                  countRunCard(
+                                      child: "4",
+                                      onTap: () {
+                                        runCount(4);
+                                      }),
+                                  countRunCard(
+                                      child: "5",
+                                      onTap: () {
+                                        runCount(5);
+                                      }),
+                                  countRunCard(
+                                      child: "6",
+                                      onTap: () {
+                                        runCount(6);
+                                      }),
+                                  countRunCard(child: "...", onTap: () {}),
+                                  InkWell(
+                                    onTap: () {
+                                      final runsDetail = scoreStore.currentOver.last.split('-');
+                                      cricAlertDialog(context,
+                                          child: Text("You want to undo"),
+                                          title: Text("Are you sure?"),
+                                          confirmationButton: TextButton(
+                                              onPressed: () {
+                                                scoreStore.undoRun(runsDetail[1], int.parse(runsDetail[0]));
+                                                GoRouter.of(context).pop();
+                                              },
+                                              child: Text("Undo")));
+                                    },
+                                    child: CricOutlineCard(
+                                        color: context.primary,
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.circular(10),
+                                          side: BorderSide(
+                                            width: 1,
+                                            color: context.outline,
+                                          ),
+                                        ),
+                                        child: Center(
+                                            child: Text(
+                                          "undo",
+                                          style: TextStyle(color: context.onPrimary),
+                                        ))),
+                                  )
+                                ]),
                               )),
                         ],
                       ),
@@ -529,81 +441,66 @@ class _ScoreCountPageState extends State<ScoreCountPage> {
                       //       ),
                       //     )),
                       // 5 : run count
-                      Row(
-                        children: [
-                          SizedBox(
-                            width: MediaQuery.of(context).size.width / 3,
-                            child: CricCard(
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(8)),
-                                child: Container(
-                                  padding: EdgeInsets.all(8),
-                                  child: Column(
-                                    children: [
-                                      cricFilledButton(
-                                        childText: "Partnerships",
-                                        onTap: () {
-                                          scoreStore.lastSavePartnership();
-                                          cricBottomSheet(
-                                              context,
-                                              Container(
-                                                padding: EdgeInsets.all(16),
-                                                width: double.infinity,
-                                                child: ListView(
-                                                  shrinkWrap: true,
-                                                  children: [
-                                                    ...scoreStore.currentInning!
-                                                        .partnerShips!.reversed
-                                                        .map((part) {
-                                                      return playerPartnershipWidget(
-                                                          context, part);
-                                                    }).toList(),
-                                                  ],
-                                                ),
-                                              ));
-                                        },
-                                      ),
-                                      const SizedBox(
-                                        height: 4,
-                                      ),
-                                      cricFilledButton(
-                                        childText: "Extra",
-                                        onTap: () {
-                                          cricBottomSheet(
-                                              context,
-                                              Container(
-                                                padding: EdgeInsets.all(16),
-                                                width: double.infinity,
-                                                child: Column(
-                                                  mainAxisSize:
-                                                      MainAxisSize.min,
-                                                  children: [
-                                                    Text(
-                                                        scoreStore
-                                                            .extraRun!.total
-                                                            .toString(),
-                                                        style: context
-                                                            .headlineLarge
-                                                            ?.copyWith(
-                                                                color: context
-                                                                    .onPrimaryContainer)),
-                                                    Text(
-                                                        "${scoreStore.extraRun!.by} B, ${scoreStore.extraRun!.legBy} LB, ${scoreStore.extraRun!.wide} WD, ${scoreStore.extraRun!.noBall} NB, ${scoreStore.extraRun!.penlaty} P",
-                                                        style: context
-                                                            .headlineSmall
-                                                            ?.copyWith(
-                                                                color: context
-                                                                    .onSurfaceVariant)),
-                                                  ],
-                                                ),
-                                              ));
-                                        },
-                                      )
-                                    ],
+                      SizedBox(
+                        // width: MediaQuery.of(context).size.width - 16,
+                        child: CricCard(
+                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                            child: Container(
+                              padding: EdgeInsets.all(8),
+                              child: Row(
+                                children: [
+                                  Expanded(
+                                    child: cricFilledButton(
+                                      childText: "Partnerships",
+                                      onTap: () {
+                                        scoreStore.lastSavePartnership();
+                                        cricBottomSheet(
+                                            context,
+                                            Container(
+                                              padding: EdgeInsets.all(16),
+                                              width: double.infinity,
+                                              child: ListView(
+                                                shrinkWrap: true,
+                                                children: [
+                                                  ...scoreStore.currentInning!.partnerShips!.reversed.map((part) {
+                                                    return playerPartnershipWidget(context, part);
+                                                  }).toList(),
+                                                ],
+                                              ),
+                                            ));
+                                      },
+                                    ),
                                   ),
-                                )),
-                          ),
-                        ],
+                                  const SizedBox(
+                                    width: 4,
+                                  ),
+                                  Expanded(
+                                    child: cricFilledButton(
+                                      width: double.infinity,
+                                      childText: "Extra",
+                                      onTap: () {
+                                        cricBottomSheet(
+                                            context,
+                                            Container(
+                                              padding: EdgeInsets.all(16),
+                                              width: double.infinity,
+                                              child: Column(
+                                                mainAxisSize: MainAxisSize.min,
+                                                children: [
+                                                  Text(scoreStore.extraRun!.total.toString(),
+                                                      style: context.headlineLarge?.copyWith(color: context.onPrimaryContainer)),
+                                                  Text(
+                                                      "${scoreStore.extraRun!.by} B, ${scoreStore.extraRun!.legBy} LB, ${scoreStore.extraRun!.wide} WD, ${scoreStore.extraRun!.noBall} NB, ${scoreStore.extraRun!.penlaty} P",
+                                                      style: context.headlineSmall?.copyWith(color: context.onSurfaceVariant)),
+                                                ],
+                                              ),
+                                            ));
+                                      },
+                                    ),
+                                  )
+                                ],
+                              ),
+                            )),
                       ),
                     ],
                   ),
@@ -624,10 +521,8 @@ class _ScoreCountPageState extends State<ScoreCountPage> {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Text(
-                "${scoreStore.currentInning!.bowlTeamName} Need ${scoreStore.totalRun + 1} Runs in ${scoreStore.matchData!.over} overs."),
-            Text(
-                "Require runrate: ${((scoreStore.totalRun + 1) / int.parse(scoreStore.matchData!.over!)).toStringAsFixed(2)}")
+            Text("${scoreStore.currentInning!.bowlTeamName} Need ${scoreStore.totalRun + 1} Runs in ${scoreStore.matchData!.over} overs."),
+            Text("Require runrate: ${((scoreStore.totalRun + 1) / int.parse(scoreStore.matchData!.over!)).toStringAsFixed(2)}")
           ],
         ),
         confirmationButton: TextButton(
@@ -641,31 +536,20 @@ class _ScoreCountPageState extends State<ScoreCountPage> {
 
   void runCount(int run) {
     if (scoreStore.totalBall < (int.parse(scoreStore.matchData!.over!) * 6) &&
-        scoreStore.totalWicket <
-            (int.parse(scoreStore.matchData!.playerPerMatch ?? "11") - 1)) {
+        scoreStore.totalWicket < (int.parse(scoreStore.matchData!.playerPerMatch ?? "11") - 1)) {
       if (scoreStore.overLength < 6) {
+        scoreStore.wicket ? scoreStore.whoGotOut = scoreStore.striker!.playerId! : null;
         scoreStore.wicket
-            ? scoreStore.whoGotOut = scoreStore.striker!.playerId!
-            : null;
-        scoreStore.wicket
-            ? GoRouter.of(context).pushNamed(RoutesName.fallOfWicket.name,
-                pathParameters: {"run": "$run"})
+            ? GoRouter.of(context).pushNamed(RoutesName.fallOfWicket.name, pathParameters: {"run": "$run"})
             : scoreStore.countRun(run: run);
 
-        if (scoreStore.totalBall ==
-                (int.parse(scoreStore.matchData!.over!) * 6) ||
-            scoreStore.totalWicket ==
-                (int.parse(scoreStore.matchData!.playerPerMatch ?? "11") - 1) ||
-            (scoreStore.totalBall <
-                    (int.parse(scoreStore.matchData!.over!) * 6) &&
-                scoreStore.totalWicket <
-                    (int.parse(scoreStore.matchData!.playerPerMatch ?? "11") -
-                        1) &&
+        if (scoreStore.totalBall == (int.parse(scoreStore.matchData!.over!) * 6) ||
+            scoreStore.totalWicket == (int.parse(scoreStore.matchData!.playerPerMatch ?? "11") - 1) ||
+            (scoreStore.totalBall < (int.parse(scoreStore.matchData!.over!) * 6) &&
+                scoreStore.totalWicket < (int.parse(scoreStore.matchData!.playerPerMatch ?? "11") - 1) &&
                 !scoreStore.currentInning!.isFirstInning! &&
                 scoreStore.totalRun >= scoreStore.target)) {
-          scoreStore.currentInning!.isFirstInning!
-              ? inningDialog(context)
-              : wonNavigate();
+          scoreStore.currentInning!.isFirstInning! ? inningDialog(context) : wonNavigate();
         } else {
           if (scoreStore.overLength == 6) {
             GoRouter.of(context).push(RoutesName.selectBowler.path);
@@ -675,9 +559,7 @@ class _ScoreCountPageState extends State<ScoreCountPage> {
         GoRouter.of(context).push(RoutesName.selectBowler.path);
       }
     } else {
-      scoreStore.currentInning!.isFirstInning!
-          ? inningDialog(context)
-          : wonNavigate();
+      scoreStore.currentInning!.isFirstInning! ? inningDialog(context) : wonNavigate();
     }
   }
 
@@ -772,15 +654,13 @@ class _ScoreCountPageState extends State<ScoreCountPage> {
     );
   }
 
-  Widget cricFilledButton(
-      {required String childText, double? width, Function()? onTap}) {
+  Widget cricFilledButton({required String childText, double? width, Function()? onTap}) {
     return InkWell(
       onTap: onTap,
       child: Container(
         width: width ?? double.infinity,
         padding: EdgeInsets.symmetric(horizontal: 4, vertical: 8),
-        decoration: BoxDecoration(
-            color: context.primary, borderRadius: BorderRadius.circular(10)),
+        decoration: BoxDecoration(color: context.primary, borderRadius: BorderRadius.circular(10)),
         child: Center(
           child: Text(
             childText,
