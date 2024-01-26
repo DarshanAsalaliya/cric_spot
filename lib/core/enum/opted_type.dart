@@ -1,0 +1,1 @@
+enum OptedType { bat, bowl }
