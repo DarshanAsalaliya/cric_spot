@@ -1,4 +1,4 @@
-package com.example.cric_spot
+package com.cric_spot.cric_spot
 
 import io.flutter.embedding.android.FlutterActivity
 

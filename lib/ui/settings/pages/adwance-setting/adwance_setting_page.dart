@@ -5,6 +5,7 @@ import 'package:cric_spot/main.dart';
 import 'package:cric_spot/store/home/home_store.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:go_router/go_router.dart';
 
 class AdwanceSettingPage extends StatelessWidget {
   const AdwanceSettingPage({super.key});
@@ -32,8 +33,7 @@ class AdwanceSettingPage extends StatelessWidget {
             ),
             Text(
               "Player per match?",
-              style: context.titleMedium?.copyWith(
-                  fontWeight: FontWeight.w600, color: context.onBackground),
+              style: context.titleMedium?.copyWith(fontWeight: FontWeight.w600, color: context.onBackground),
             ),
             const SizedBox(
               height: 16,
@@ -54,8 +54,7 @@ class AdwanceSettingPage extends StatelessWidget {
               children: [
                 Text(
                   "No Ball",
-                  style: context.titleMedium?.copyWith(
-                      fontWeight: FontWeight.w600, color: context.onBackground),
+                  style: context.titleMedium?.copyWith(fontWeight: FontWeight.w600, color: context.onBackground),
                 ),
                 Observer(builder: (context) {
                   return Switch(
@@ -134,8 +133,7 @@ class AdwanceSettingPage extends StatelessWidget {
               children: [
                 Text(
                   "Wide Ball",
-                  style: context.titleMedium?.copyWith(
-                      fontWeight: FontWeight.w600, color: context.onBackground),
+                  style: context.titleMedium?.copyWith(fontWeight: FontWeight.w600, color: context.onBackground),
                 ),
                 Observer(builder: (context) {
                   return Switch(
@@ -209,7 +207,11 @@ class AdwanceSettingPage extends StatelessWidget {
             const SizedBox(
               height: 8,
             ),
-            FilledButton(onPressed: () {}, child: const Text("Save Setting"))
+            FilledButton(
+                onPressed: () {
+                  GoRouter.of(context).pop();
+                },
+                child: const Text("Save Setting"))
           ],
         ),
       ),
