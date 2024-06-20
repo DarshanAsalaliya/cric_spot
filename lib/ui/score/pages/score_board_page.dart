@@ -24,8 +24,7 @@ class ScoreBoardPage extends StatelessWidget {
           Card(
             child: Container(
               padding: const EdgeInsets.all(16),
-              child: Text(
-                  "${scoreStore.matchData!.tossName} won the toss and opted to ${(scoreStore.matchData!.tossElect!).toUpperCase()} first"),
+              child: Text("${scoreStore.matchData!.tossName} won the toss and opted to ${(scoreStore.matchData!.tossElect!).toUpperCase()} first"),
             ),
           ),
           InkWell(
@@ -40,20 +39,17 @@ class ScoreBoardPage extends StatelessWidget {
                 children: [
                   Text(
                     scoreStore.matchData!.firstBatTeamName!,
-                    style:
-                        context.titleLarge!.copyWith(color: context.background),
+                    style: context.titleLarge!.copyWith(color: context.background),
                   ),
                   Row(
                     children: [
                       Text(
                         "${scoreStore.matchData!.firstBatTeamScore}",
-                        style: context.titleLarge!
-                            .copyWith(color: context.background),
+                        style: context.titleLarge!.copyWith(color: context.background),
                       ),
                       Text(
                         " (${scoreStore.matchData!.firstBatTeamOver}) ",
-                        style: context.titleLarge!
-                            .copyWith(color: context.background),
+                        style: context.titleLarge!.copyWith(color: context.background),
                       ),
                       Observer(builder: (_) {
                         return scoreStore.scoreBoardOneIsOpen
@@ -78,8 +74,7 @@ class ScoreBoardPage extends StatelessWidget {
                 : Column(
                     children: [
                       Container(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 8, vertical: 10),
+                        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 10),
                         color: context.surfaceVariant,
                         child: Row(
                           children: [
@@ -87,40 +82,35 @@ class ScoreBoardPage extends StatelessWidget {
                             Row(
                               children: [
                                 SizedBox(
-                                  width:
-                                      MediaQuery.of(context).size.width * 0.11,
+                                  width: MediaQuery.of(context).size.width * 0.11,
                                   child: const Text(
                                     "R",
                                     textAlign: TextAlign.end,
                                   ),
                                 ),
                                 SizedBox(
-                                  width:
-                                      MediaQuery.of(context).size.width * 0.11,
+                                  width: MediaQuery.of(context).size.width * 0.11,
                                   child: const Text(
                                     "B",
                                     textAlign: TextAlign.end,
                                   ),
                                 ),
                                 SizedBox(
-                                  width:
-                                      MediaQuery.of(context).size.width * 0.11,
+                                  width: MediaQuery.of(context).size.width * 0.11,
                                   child: const Text(
                                     "4s",
                                     textAlign: TextAlign.end,
                                   ),
                                 ),
                                 SizedBox(
-                                  width:
-                                      MediaQuery.of(context).size.width * 0.11,
+                                  width: MediaQuery.of(context).size.width * 0.11,
                                   child: const Text(
                                     "6s",
                                     textAlign: TextAlign.end,
                                   ),
                                 ),
                                 SizedBox(
-                                  width:
-                                      MediaQuery.of(context).size.width * 0.13,
+                                  width: MediaQuery.of(context).size.width * 0.13,
                                   child: const Text(
                                     "SR",
                                     textAlign: TextAlign.end,
@@ -145,56 +135,37 @@ class ScoreBoardPage extends StatelessWidget {
                                       Row(
                                         children: [
                                           SizedBox(
-                                            width: MediaQuery.of(context)
-                                                    .size
-                                                    .width *
-                                                0.11,
+                                            width: MediaQuery.of(context).size.width * 0.11,
                                             child: Text(
                                               batsman.run.toString(),
                                               textAlign: TextAlign.end,
                                             ),
                                           ),
                                           SizedBox(
-                                            width: MediaQuery.of(context)
-                                                    .size
-                                                    .width *
-                                                0.11,
+                                            width: MediaQuery.of(context).size.width * 0.11,
                                             child: Text(
                                               batsman.ball.toString(),
                                               textAlign: TextAlign.end,
                                             ),
                                           ),
                                           SizedBox(
-                                            width: MediaQuery.of(context)
-                                                    .size
-                                                    .width *
-                                                0.11,
+                                            width: MediaQuery.of(context).size.width * 0.11,
                                             child: Text(
                                               batsman.four.toString(),
                                               textAlign: TextAlign.end,
                                             ),
                                           ),
                                           SizedBox(
-                                            width: MediaQuery.of(context)
-                                                    .size
-                                                    .width *
-                                                0.11,
+                                            width: MediaQuery.of(context).size.width * 0.11,
                                             child: Text(
                                               batsman.six.toString(),
                                               textAlign: TextAlign.end,
                                             ),
                                           ),
                                           SizedBox(
-                                            width: MediaQuery.of(context)
-                                                    .size
-                                                    .width *
-                                                0.13,
+                                            width: MediaQuery.of(context).size.width * 0.13,
                                             child: Text(
-                                              batsman.ball == 0
-                                                  ? "0.00"
-                                                  : ((batsman.run! * 100) /
-                                                          (batsman.ball!))
-                                                      .toStringAsFixed(2),
+                                              batsman.ball == 0 ? "0.00" : ((batsman.run! * 100) / (batsman.ball!)).toStringAsFixed(2),
                                               textAlign: TextAlign.end,
                                             ),
                                           )
@@ -208,7 +179,9 @@ class ScoreBoardPage extends StatelessWidget {
                                   Text(
                                     batsman.isNotOut!
                                         ? "Not Out"
-                                        : "${batsman.outType} by ${batsman.outBy}",
+                                        : batsman.helpedPlayer == null
+                                            ? "${batsman.outType} b ${batsman.outBy} "
+                                            : "${batsman.outType} by ${batsman.helpedPlayer} b ${batsman.outBy}",
                                     style: const TextStyle(color: Colors.grey),
                                   )
                                 ],
@@ -255,8 +228,7 @@ class ScoreBoardPage extends StatelessWidget {
                         ),
                       ),
                       Container(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 8, vertical: 10),
+                        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 10),
                         color: context.surfaceVariant,
                         child: Row(
                           children: [
@@ -264,40 +236,35 @@ class ScoreBoardPage extends StatelessWidget {
                             Row(
                               children: [
                                 SizedBox(
-                                  width:
-                                      MediaQuery.of(context).size.width * 0.11,
+                                  width: MediaQuery.of(context).size.width * 0.11,
                                   child: const Text(
                                     "O",
                                     textAlign: TextAlign.end,
                                   ),
                                 ),
                                 SizedBox(
-                                  width:
-                                      MediaQuery.of(context).size.width * 0.11,
+                                  width: MediaQuery.of(context).size.width * 0.11,
                                   child: const Text(
                                     "M",
                                     textAlign: TextAlign.end,
                                   ),
                                 ),
                                 SizedBox(
-                                  width:
-                                      MediaQuery.of(context).size.width * 0.11,
+                                  width: MediaQuery.of(context).size.width * 0.11,
                                   child: const Text(
                                     "R",
                                     textAlign: TextAlign.end,
                                   ),
                                 ),
                                 SizedBox(
-                                  width:
-                                      MediaQuery.of(context).size.width * 0.11,
+                                  width: MediaQuery.of(context).size.width * 0.11,
                                   child: const Text(
                                     "W",
                                     textAlign: TextAlign.end,
                                   ),
                                 ),
                                 SizedBox(
-                                  width:
-                                      MediaQuery.of(context).size.width * 0.13,
+                                  width: MediaQuery.of(context).size.width * 0.13,
                                   child: const Text(
                                     "ER",
                                     textAlign: TextAlign.end,
@@ -322,56 +289,37 @@ class ScoreBoardPage extends StatelessWidget {
                                       Row(
                                         children: [
                                           SizedBox(
-                                            width: MediaQuery.of(context)
-                                                    .size
-                                                    .width *
-                                                0.11,
+                                            width: MediaQuery.of(context).size.width * 0.11,
                                             child: Text(
                                               "${(bowler.ball! ~/ 6)}.${(bowler.ball! % 6)}",
                                               textAlign: TextAlign.end,
                                             ),
                                           ),
                                           SizedBox(
-                                            width: MediaQuery.of(context)
-                                                    .size
-                                                    .width *
-                                                0.11,
+                                            width: MediaQuery.of(context).size.width * 0.11,
                                             child: Text(
                                               bowler.maidan.toString(),
                                               textAlign: TextAlign.end,
                                             ),
                                           ),
                                           SizedBox(
-                                            width: MediaQuery.of(context)
-                                                    .size
-                                                    .width *
-                                                0.11,
+                                            width: MediaQuery.of(context).size.width * 0.11,
                                             child: Text(
                                               bowler.run.toString(),
                                               textAlign: TextAlign.end,
                                             ),
                                           ),
                                           SizedBox(
-                                            width: MediaQuery.of(context)
-                                                    .size
-                                                    .width *
-                                                0.11,
+                                            width: MediaQuery.of(context).size.width * 0.11,
                                             child: Text(
                                               bowler.wicket.toString(),
                                               textAlign: TextAlign.end,
                                             ),
                                           ),
                                           SizedBox(
-                                            width: MediaQuery.of(context)
-                                                    .size
-                                                    .width *
-                                                0.13,
+                                            width: MediaQuery.of(context).size.width * 0.13,
                                             child: Text(
-                                              bowler.ball == 0
-                                                  ? '0.0'
-                                                  : (bowler.run! /
-                                                          (bowler.ball! / 6))
-                                                      .toStringAsFixed(1),
+                                              bowler.ball == 0 ? '0.0' : (bowler.run! / (bowler.ball! / 6)).toStringAsFixed(1),
                                               textAlign: TextAlign.end,
                                             ),
                                           )
@@ -398,32 +346,27 @@ class ScoreBoardPage extends StatelessWidget {
                   children: [
                     InkWell(
                       onTap: () {
-                        scoreStore.scoreBoardTwoIsOpen =
-                            !scoreStore.scoreBoardTwoIsOpen;
+                        scoreStore.scoreBoardTwoIsOpen = !scoreStore.scoreBoardTwoIsOpen;
                       },
                       child: Container(
                         color: context.primary,
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 8, vertical: 12),
+                        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 12),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
                               scoreStore.matchData!.secondBatTeamName!,
-                              style: context.titleLarge!
-                                  .copyWith(color: context.background),
+                              style: context.titleLarge!.copyWith(color: context.background),
                             ),
                             Row(
                               children: [
                                 Text(
                                   "${scoreStore.matchData!.secondBatTeamScore}",
-                                  style: context.titleLarge!
-                                      .copyWith(color: context.background),
+                                  style: context.titleLarge!.copyWith(color: context.background),
                                 ),
                                 Text(
                                   " (${scoreStore.matchData!.secondBatTeamOver}) ",
-                                  style: context.titleLarge!
-                                      .copyWith(color: context.background),
+                                  style: context.titleLarge!.copyWith(color: context.background),
                                 ),
                                 Observer(builder: (_) {
                                   return scoreStore.scoreBoardTwoIsOpen
@@ -448,8 +391,7 @@ class ScoreBoardPage extends StatelessWidget {
                           : Column(
                               children: [
                                 Container(
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 8, vertical: 10),
+                                  padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 10),
                                   color: context.surfaceVariant,
                                   child: Row(
                                     children: [
@@ -457,50 +399,35 @@ class ScoreBoardPage extends StatelessWidget {
                                       Row(
                                         children: [
                                           SizedBox(
-                                            width: MediaQuery.of(context)
-                                                    .size
-                                                    .width *
-                                                0.11,
+                                            width: MediaQuery.of(context).size.width * 0.11,
                                             child: const Text(
                                               "R",
                                               textAlign: TextAlign.end,
                                             ),
                                           ),
                                           SizedBox(
-                                            width: MediaQuery.of(context)
-                                                    .size
-                                                    .width *
-                                                0.11,
+                                            width: MediaQuery.of(context).size.width * 0.11,
                                             child: const Text(
                                               "B",
                                               textAlign: TextAlign.end,
                                             ),
                                           ),
                                           SizedBox(
-                                            width: MediaQuery.of(context)
-                                                    .size
-                                                    .width *
-                                                0.11,
+                                            width: MediaQuery.of(context).size.width * 0.11,
                                             child: const Text(
                                               "4s",
                                               textAlign: TextAlign.end,
                                             ),
                                           ),
                                           SizedBox(
-                                            width: MediaQuery.of(context)
-                                                    .size
-                                                    .width *
-                                                0.11,
+                                            width: MediaQuery.of(context).size.width * 0.11,
                                             child: const Text(
                                               "6s",
                                               textAlign: TextAlign.end,
                                             ),
                                           ),
                                           SizedBox(
-                                            width: MediaQuery.of(context)
-                                                    .size
-                                                    .width *
-                                                0.13,
+                                            width: MediaQuery.of(context).size.width * 0.13,
                                             child: const Text(
                                               "SR",
                                               textAlign: TextAlign.end,
@@ -511,87 +438,52 @@ class ScoreBoardPage extends StatelessWidget {
                                     ],
                                   ),
                                 ),
-                                ...scoreStore.inningTwo!.battingLineup!
-                                    .map((batsman) {
+                                ...scoreStore.inningTwo!.battingLineup!.map((batsman) {
                                   return Column(
                                     children: [
                                       Container(
                                         padding: const EdgeInsets.all(8),
                                         child: Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
+                                          crossAxisAlignment: CrossAxisAlignment.start,
                                           children: [
                                             Row(
                                               children: [
-                                                Expanded(
-                                                    child: Text(batsman.name!)),
+                                                Expanded(child: Text(batsman.name!)),
                                                 Row(
                                                   children: [
                                                     SizedBox(
-                                                      width:
-                                                          MediaQuery.of(context)
-                                                                  .size
-                                                                  .width *
-                                                              0.11,
+                                                      width: MediaQuery.of(context).size.width * 0.11,
                                                       child: Text(
                                                         batsman.run.toString(),
-                                                        textAlign:
-                                                            TextAlign.end,
+                                                        textAlign: TextAlign.end,
                                                       ),
                                                     ),
                                                     SizedBox(
-                                                      width:
-                                                          MediaQuery.of(context)
-                                                                  .size
-                                                                  .width *
-                                                              0.11,
+                                                      width: MediaQuery.of(context).size.width * 0.11,
                                                       child: Text(
                                                         batsman.ball.toString(),
-                                                        textAlign:
-                                                            TextAlign.end,
+                                                        textAlign: TextAlign.end,
                                                       ),
                                                     ),
                                                     SizedBox(
-                                                      width:
-                                                          MediaQuery.of(context)
-                                                                  .size
-                                                                  .width *
-                                                              0.11,
+                                                      width: MediaQuery.of(context).size.width * 0.11,
                                                       child: Text(
                                                         batsman.four.toString(),
-                                                        textAlign:
-                                                            TextAlign.end,
+                                                        textAlign: TextAlign.end,
                                                       ),
                                                     ),
                                                     SizedBox(
-                                                      width:
-                                                          MediaQuery.of(context)
-                                                                  .size
-                                                                  .width *
-                                                              0.11,
+                                                      width: MediaQuery.of(context).size.width * 0.11,
                                                       child: Text(
                                                         batsman.six.toString(),
-                                                        textAlign:
-                                                            TextAlign.end,
+                                                        textAlign: TextAlign.end,
                                                       ),
                                                     ),
                                                     SizedBox(
-                                                      width:
-                                                          MediaQuery.of(context)
-                                                                  .size
-                                                                  .width *
-                                                              0.13,
+                                                      width: MediaQuery.of(context).size.width * 0.13,
                                                       child: Text(
-                                                        batsman.ball == 0
-                                                            ? "0.00"
-                                                            : ((batsman.run! *
-                                                                        100) /
-                                                                    (batsman
-                                                                        .ball!))
-                                                                .toStringAsFixed(
-                                                                    2),
-                                                        textAlign:
-                                                            TextAlign.end,
+                                                        batsman.ball == 0 ? "0.00" : ((batsman.run! * 100) / (batsman.ball!)).toStringAsFixed(2),
+                                                        textAlign: TextAlign.end,
                                                       ),
                                                     )
                                                   ],
@@ -604,9 +496,10 @@ class ScoreBoardPage extends StatelessWidget {
                                             Text(
                                               batsman.isNotOut!
                                                   ? "Not Out"
-                                                  : "${batsman.outType} by ${batsman.outBy}",
-                                              style: const TextStyle(
-                                                  color: Colors.grey),
+                                                  : batsman.helpedPlayer == null
+                                                      ? "${batsman.outType} b ${batsman.outBy} "
+                                                      : "${batsman.outType} by ${batsman.helpedPlayer} b ${batsman.outBy}",
+                                              style: const TextStyle(color: Colors.grey),
                                             )
                                           ],
                                         ),
@@ -620,8 +513,7 @@ class ScoreBoardPage extends StatelessWidget {
                                 Container(
                                   padding: const EdgeInsets.all(8),
                                   child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                     children: [
                                       const Text("Extras"),
                                       Row(
@@ -639,15 +531,12 @@ class ScoreBoardPage extends StatelessWidget {
                                 Container(
                                   padding: const EdgeInsets.all(8),
                                   child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                     children: [
                                       const Text("Total"),
                                       Row(
                                         children: [
-                                          Text(scoreStore
-                                                      .inningTwo!.totalBall ==
-                                                  0
+                                          Text(scoreStore.inningTwo!.totalBall == 0
                                               ? "0/0 (0.0)  0.00 "
                                               : "${scoreStore.inningTwo!.totalRun}  (${scoreStore.matchData!.firstBatTeamOver})  ${(scoreStore.inningTwo!.totalRun! / (scoreStore.inningTwo!.totalBall! / 6)).toStringAsFixed(2)}")
                                         ],
@@ -656,8 +545,7 @@ class ScoreBoardPage extends StatelessWidget {
                                   ),
                                 ),
                                 Container(
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 8, vertical: 10),
+                                  padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 10),
                                   color: context.surfaceVariant,
                                   child: Row(
                                     children: [
@@ -665,50 +553,35 @@ class ScoreBoardPage extends StatelessWidget {
                                       Row(
                                         children: [
                                           SizedBox(
-                                            width: MediaQuery.of(context)
-                                                    .size
-                                                    .width *
-                                                0.11,
+                                            width: MediaQuery.of(context).size.width * 0.11,
                                             child: const Text(
                                               "O",
                                               textAlign: TextAlign.end,
                                             ),
                                           ),
                                           SizedBox(
-                                            width: MediaQuery.of(context)
-                                                    .size
-                                                    .width *
-                                                0.11,
+                                            width: MediaQuery.of(context).size.width * 0.11,
                                             child: const Text(
                                               "M",
                                               textAlign: TextAlign.end,
                                             ),
                                           ),
                                           SizedBox(
-                                            width: MediaQuery.of(context)
-                                                    .size
-                                                    .width *
-                                                0.11,
+                                            width: MediaQuery.of(context).size.width * 0.11,
                                             child: const Text(
                                               "R",
                                               textAlign: TextAlign.end,
                                             ),
                                           ),
                                           SizedBox(
-                                            width: MediaQuery.of(context)
-                                                    .size
-                                                    .width *
-                                                0.11,
+                                            width: MediaQuery.of(context).size.width * 0.11,
                                             child: const Text(
                                               "W",
                                               textAlign: TextAlign.end,
                                             ),
                                           ),
                                           SizedBox(
-                                            width: MediaQuery.of(context)
-                                                    .size
-                                                    .width *
-                                                0.13,
+                                            width: MediaQuery.of(context).size.width * 0.13,
                                             child: const Text(
                                               "ER",
                                               textAlign: TextAlign.end,
@@ -719,88 +592,52 @@ class ScoreBoardPage extends StatelessWidget {
                                     ],
                                   ),
                                 ),
-                                ...scoreStore.inningTwo!.bowlingLineup!
-                                    .map((bowler) {
+                                ...scoreStore.inningTwo!.bowlingLineup!.map((bowler) {
                                   return Column(
                                     children: [
                                       Container(
                                         padding: const EdgeInsets.all(8),
                                         child: Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
+                                          crossAxisAlignment: CrossAxisAlignment.start,
                                           children: [
                                             Row(
                                               children: [
-                                                Expanded(
-                                                    child: Text(bowler.name!)),
+                                                Expanded(child: Text(bowler.name!)),
                                                 Row(
                                                   children: [
                                                     SizedBox(
-                                                      width:
-                                                          MediaQuery.of(context)
-                                                                  .size
-                                                                  .width *
-                                                              0.11,
+                                                      width: MediaQuery.of(context).size.width * 0.11,
                                                       child: Text(
                                                         "${(bowler.ball! ~/ 6)}.${(bowler.ball! % 6)}",
-                                                        textAlign:
-                                                            TextAlign.end,
+                                                        textAlign: TextAlign.end,
                                                       ),
                                                     ),
                                                     SizedBox(
-                                                      width:
-                                                          MediaQuery.of(context)
-                                                                  .size
-                                                                  .width *
-                                                              0.11,
+                                                      width: MediaQuery.of(context).size.width * 0.11,
                                                       child: Text(
-                                                        bowler.maidan
-                                                            .toString(),
-                                                        textAlign:
-                                                            TextAlign.end,
+                                                        bowler.maidan.toString(),
+                                                        textAlign: TextAlign.end,
                                                       ),
                                                     ),
                                                     SizedBox(
-                                                      width:
-                                                          MediaQuery.of(context)
-                                                                  .size
-                                                                  .width *
-                                                              0.11,
+                                                      width: MediaQuery.of(context).size.width * 0.11,
                                                       child: Text(
                                                         bowler.run.toString(),
-                                                        textAlign:
-                                                            TextAlign.end,
+                                                        textAlign: TextAlign.end,
                                                       ),
                                                     ),
                                                     SizedBox(
-                                                      width:
-                                                          MediaQuery.of(context)
-                                                                  .size
-                                                                  .width *
-                                                              0.11,
+                                                      width: MediaQuery.of(context).size.width * 0.11,
                                                       child: Text(
-                                                        bowler.wicket
-                                                            .toString(),
-                                                        textAlign:
-                                                            TextAlign.end,
+                                                        bowler.wicket.toString(),
+                                                        textAlign: TextAlign.end,
                                                       ),
                                                     ),
                                                     SizedBox(
-                                                      width:
-                                                          MediaQuery.of(context)
-                                                                  .size
-                                                                  .width *
-                                                              0.13,
+                                                      width: MediaQuery.of(context).size.width * 0.13,
                                                       child: Text(
-                                                        bowler.ball == 0
-                                                            ? '0.0'
-                                                            : (bowler.run! /
-                                                                    (bowler.ball! /
-                                                                        6))
-                                                                .toStringAsFixed(
-                                                                    1),
-                                                        textAlign:
-                                                            TextAlign.end,
+                                                        bowler.ball == 0 ? '0.0' : (bowler.run! / (bowler.ball! / 6)).toStringAsFixed(1),
+                                                        textAlign: TextAlign.end,
                                                       ),
                                                     )
                                                   ],

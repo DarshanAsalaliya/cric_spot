@@ -402,6 +402,22 @@ mixin _$ScoreStore on _ScoreStore, Store {
     });
   }
 
+  late final _$supporterPlayerAtom =
+      Atom(name: '_ScoreStore.supporterPlayer', context: context);
+
+  @override
+  String get supporterPlayer {
+    _$supporterPlayerAtom.reportRead();
+    return super.supporterPlayer;
+  }
+
+  @override
+  set supporterPlayer(String value) {
+    _$supporterPlayerAtom.reportWrite(value, super.supporterPlayer, () {
+      super.supporterPlayer = value;
+    });
+  }
+
   late final _$wicketTypeAtom =
       Atom(name: '_ScoreStore.wicketType', context: context);
 
@@ -646,6 +662,7 @@ target: ${target},
 overLength: ${overLength},
 newBowler: ${newBowler},
 newBatsman: ${newBatsman},
+supporterPlayer: ${supporterPlayer},
 wicketType: ${wicketType},
 runCountType: ${runCountType},
 scoreBoardOneIsOpen: ${scoreBoardOneIsOpen},

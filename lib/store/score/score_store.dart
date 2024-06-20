@@ -104,6 +104,9 @@ abstract class _ScoreStore with Store {
   String newBatsman = '';
 
   @observable
+  String supporterPlayer = '';
+
+  @observable
   WicketType wicketType = WicketType.bowled;
 
   @observable
@@ -399,6 +402,19 @@ abstract class _ScoreStore with Store {
     } else {
       runCountType = RunCountType.noramlRun;
     }
+  }
+
+  /// strike rotation
+  void swapBatsMan() {
+    /// change striker and non striker
+    final change = striker;
+    striker = nonStriker;
+    nonStriker = change;
+
+    /// change partner striker and non striker in partner ship
+    final partnershipChange = currentPartnerShip!.currentStiker;
+    currentPartnerShip!.currentStiker = currentPartnerShip!.currentNotStiker;
+    currentPartnerShip!.currentNotStiker = partnershipChange;
   }
 
   @action
@@ -944,24 +960,29 @@ abstract class _ScoreStore with Store {
           nonStriker!.outBy = bowler!.name;
           nonStriker!.outType = wicketType.name;
           nonStriker!.isNotOut = false;
+          nonStriker!.helpedPlayer = supporterPlayer == '' ? null : supporterPlayer;
 
           currentInning!.fallOfWicket!.add({
             "batsmanId": nonStriker!.playerId!,
             "batsmanName": nonStriker!.name!,
             "runWicket": "$totalRun - $totalWicket",
             "over": "${totalBall / 6}.${totalBall % 6}",
-            "wicketType": wicketType.name
+            "wicketType": wicketType.name,
+            "supportPlayer": supporterPlayer,
           });
         } else {
           striker!.outBy = bowler!.name;
           striker!.outType = wicketType.name;
           striker!.isNotOut = false;
+          striker!.helpedPlayer = supporterPlayer == '' ? null : supporterPlayer;
+
           currentInning!.fallOfWicket!.add({
             "batsmanId": striker!.playerId!,
             "batsmanName": striker!.name!,
             "runWicket": "$totalRun - $totalWicket",
             "over": "${totalBall / 6}.${totalBall % 6}",
-            "wicketType": wicketType.name
+            "wicketType": wicketType.name,
+            "supportPlayer": supporterPlayer,
           });
         }
         lastSave();
@@ -1117,24 +1138,29 @@ abstract class _ScoreStore with Store {
           nonStriker!.outBy = bowler!.name;
           nonStriker!.outType = wicketType.name;
           nonStriker!.isNotOut = false;
+          nonStriker!.helpedPlayer = supporterPlayer == '' ? null : supporterPlayer;
 
           currentInning!.fallOfWicket!.add({
             "batsmanId": nonStriker!.playerId!,
             "batsmanName": nonStriker!.name!,
             "runWicket": "$totalRun - $totalWicket",
             "over": "${totalBall / 6}.${totalBall % 6}",
-            "wicketType": wicketType.name
+            "wicketType": wicketType.name,
+            "supportPlayer": supporterPlayer,
           });
         } else {
           striker!.outBy = bowler!.name;
           striker!.outType = wicketType.name;
           striker!.isNotOut = false;
+          striker!.helpedPlayer = supporterPlayer == '' ? null : supporterPlayer;
+
           currentInning!.fallOfWicket!.add({
             "batsmanId": striker!.playerId!,
             "batsmanName": striker!.name!,
             "runWicket": "$totalRun - $totalWicket",
             "over": "${totalBall / 6}.${totalBall % 6}",
-            "wicketType": wicketType.name
+            "wicketType": wicketType.name,
+            "supportPlayer": supporterPlayer,
           });
         }
         lastSave();
@@ -1286,24 +1312,29 @@ abstract class _ScoreStore with Store {
           nonStriker!.outBy = bowler!.name;
           nonStriker!.outType = wicketType.name;
           nonStriker!.isNotOut = false;
+          nonStriker!.helpedPlayer = supporterPlayer == '' ? null : supporterPlayer;
 
           currentInning!.fallOfWicket!.add({
             "batsmanId": nonStriker!.playerId!,
             "batsmanName": nonStriker!.name!,
             "runWicket": "$totalRun - $totalWicket",
             "over": "${totalBall / 6}.${totalBall % 6}",
-            "wicketType": wicketType.name
+            "wicketType": wicketType.name,
+            "supportPlayer": supporterPlayer,
           });
         } else {
           striker!.outBy = bowler!.name;
           striker!.outType = wicketType.name;
           striker!.isNotOut = false;
+          striker!.helpedPlayer = supporterPlayer == '' ? null : supporterPlayer;
+
           currentInning!.fallOfWicket!.add({
             "batsmanId": striker!.playerId!,
             "batsmanName": striker!.name!,
             "runWicket": "$totalRun - $totalWicket",
             "over": "${totalBall / 6}.${totalBall % 6}",
-            "wicketType": wicketType.name
+            "wicketType": wicketType.name,
+            "supportPlayer": supporterPlayer,
           });
         }
         lastSave();
@@ -1455,24 +1486,29 @@ abstract class _ScoreStore with Store {
           nonStriker!.outBy = bowler!.name;
           nonStriker!.outType = wicketType.name;
           nonStriker!.isNotOut = false;
+          nonStriker!.helpedPlayer = supporterPlayer == '' ? null : supporterPlayer;
 
           currentInning!.fallOfWicket!.add({
             "batsmanId": nonStriker!.playerId!,
             "batsmanName": nonStriker!.name!,
             "runWicket": "$totalRun - $totalWicket",
             "over": "${totalBall / 6}.${totalBall % 6}",
-            "wicketType": wicketType.name
+            "wicketType": wicketType.name,
+            "supportPlayer": supporterPlayer,
           });
         } else {
           striker!.outBy = bowler!.name;
           striker!.outType = wicketType.name;
           striker!.isNotOut = false;
+          striker!.helpedPlayer = supporterPlayer == '' ? null : supporterPlayer;
+
           currentInning!.fallOfWicket!.add({
             "batsmanId": striker!.playerId!,
             "batsmanName": striker!.name!,
             "runWicket": "$totalRun - $totalWicket",
             "over": "${totalBall / 6}.${totalBall % 6}",
-            "wicketType": wicketType.name
+            "wicketType": wicketType.name,
+            "supportPlayer": supporterPlayer,
           });
         }
         lastSave();
@@ -1627,24 +1663,29 @@ abstract class _ScoreStore with Store {
           nonStriker!.outBy = bowler!.name;
           nonStriker!.outType = wicketType.name;
           nonStriker!.isNotOut = false;
+          nonStriker!.helpedPlayer = supporterPlayer == '' ? null : supporterPlayer;
 
           currentInning!.fallOfWicket!.add({
             "batsmanId": nonStriker!.playerId!,
             "batsmanName": nonStriker!.name!,
             "runWicket": "$totalRun - $totalWicket",
             "over": "${totalBall / 6}.${totalBall % 6}",
-            "wicketType": wicketType.name
+            "wicketType": wicketType.name,
+            "supportPlayer": supporterPlayer,
           });
         } else {
           striker!.outBy = bowler!.name;
           striker!.outType = wicketType.name;
           striker!.isNotOut = false;
+          striker!.helpedPlayer = supporterPlayer == '' ? null : supporterPlayer;
+
           currentInning!.fallOfWicket!.add({
             "batsmanId": striker!.playerId!,
             "batsmanName": striker!.name!,
             "runWicket": "$totalRun - $totalWicket",
             "over": "${totalBall / 6}.${totalBall % 6}",
-            "wicketType": wicketType.name
+            "wicketType": wicketType.name,
+            "supportPlayer": supporterPlayer,
           });
         }
         lastSave();
@@ -1800,24 +1841,29 @@ abstract class _ScoreStore with Store {
           nonStriker!.outBy = bowler!.name;
           nonStriker!.outType = wicketType.name;
           nonStriker!.isNotOut = false;
+          nonStriker!.helpedPlayer = supporterPlayer == '' ? null : supporterPlayer;
 
           currentInning!.fallOfWicket!.add({
             "batsmanId": nonStriker!.playerId!,
             "batsmanName": nonStriker!.name!,
             "runWicket": "$totalRun - $totalWicket",
             "over": "${totalBall / 6}.${totalBall % 6}",
-            "wicketType": wicketType.name
+            "wicketType": wicketType.name,
+            "supportPlayer": supporterPlayer,
           });
         } else {
           striker!.outBy = bowler!.name;
           striker!.outType = wicketType.name;
           striker!.isNotOut = false;
+          striker!.helpedPlayer = supporterPlayer == '' ? null : supporterPlayer;
+
           currentInning!.fallOfWicket!.add({
             "batsmanId": striker!.playerId!,
             "batsmanName": striker!.name!,
             "runWicket": "$totalRun - $totalWicket",
             "over": "${totalBall / 6}.${totalBall % 6}",
-            "wicketType": wicketType.name
+            "wicketType": wicketType.name,
+            "supportPlayer": supporterPlayer,
           });
         }
         lastSave();
@@ -1970,6 +2016,7 @@ abstract class _ScoreStore with Store {
           nonStriker!.outBy = bowler!.name;
           nonStriker!.outType = wicketType.name;
           nonStriker!.isNotOut = false;
+          nonStriker!.helpedPlayer = supporterPlayer == '' ? null : supporterPlayer;
 
           currentInning!.fallOfWicket!.add({
             "batsmanId": nonStriker!.playerId!,
@@ -1977,12 +2024,14 @@ abstract class _ScoreStore with Store {
             "runWicket": "$totalRun - $totalWicket",
             "over": "${totalBall / 6}.${totalBall % 6}",
             "wicketType": wicketType.name,
+            "supportPlayer": supporterPlayer,
             "isStriker": "false"
           });
         } else {
           striker!.outBy = bowler!.name;
           striker!.outType = wicketType.name;
           striker!.isNotOut = false;
+          striker!.helpedPlayer = supporterPlayer == '' ? null : supporterPlayer;
 
           currentInning!.fallOfWicket!.add({
             "batsmanId": striker!.playerId!,
@@ -1990,6 +2039,7 @@ abstract class _ScoreStore with Store {
             "runWicket": "$totalRun - $totalWicket",
             "over": "${totalBall / 6}.${totalBall % 6}",
             "wicketType": wicketType.name,
+            "supportPlayer": supporterPlayer,
             "isStriker": "true"
           });
         }
@@ -2639,6 +2689,7 @@ abstract class _ScoreStore with Store {
             striker!.outBy = null;
             striker!.outType = null;
             striker!.isNotOut = true;
+            striker!.helpedPlayer = null;
             currentPartnerShip!.currentStiker!.ball = currentPartnerShip!.currentStiker!.ball! - reBallNum;
           } else {
             if (lastOutPlayer['wicketType'] == 'Runout Striker') {
@@ -2656,7 +2707,9 @@ abstract class _ScoreStore with Store {
 
             nonStriker!.outBy = null;
             nonStriker!.outType = null;
+            nonStriker!.helpedPlayer = null;
             nonStriker!.isNotOut = true;
+
             currentPartnerShip!.currentStiker!.ball = currentPartnerShip!.currentStiker!.ball! - reBallNum;
           }
         } else {
@@ -2668,6 +2721,7 @@ abstract class _ScoreStore with Store {
 
             nonStriker!.outBy = null;
             nonStriker!.outType = null;
+            nonStriker!.helpedPlayer = null;
             nonStriker!.isNotOut = true;
             currentPartnerShip!.currentNotStiker!.ball = currentPartnerShip!.currentNotStiker!.ball! - reBallNum;
           } else {
@@ -2677,6 +2731,7 @@ abstract class _ScoreStore with Store {
             striker!.ball = striker!.ball! - reBallNum;
             striker!.outBy = null;
             striker!.outType = null;
+            striker!.helpedPlayer = null;
             striker!.isNotOut = true;
 
             currentPartnerShip!.currentStiker!.ball = currentPartnerShip!.currentStiker!.ball! - reBallNum;
@@ -2768,6 +2823,7 @@ abstract class _ScoreStore with Store {
             striker!.run = striker!.run! - (run - noBallRun);
             striker!.outBy = null;
             striker!.outType = null;
+            striker!.helpedPlayer = null;
             striker!.isNotOut = true;
             currentPartnerShip!.currentStiker!.run = currentPartnerShip!.currentStiker!.run! - (run - noBallRun);
             currentPartnerShip!.currentStiker!.ball = currentPartnerShip!.currentStiker!.ball! - reBallNum;
@@ -2791,6 +2847,7 @@ abstract class _ScoreStore with Store {
 
             nonStriker!.outBy = null;
             nonStriker!.outType = null;
+            nonStriker!.helpedPlayer = null;
             nonStriker!.isNotOut = true;
             currentPartnerShip!.currentStiker!.run = currentPartnerShip!.currentStiker!.run! - (run - noBallRun);
             currentPartnerShip!.currentStiker!.ball = currentPartnerShip!.currentStiker!.ball! - reBallNum;
@@ -2805,6 +2862,7 @@ abstract class _ScoreStore with Store {
 
             nonStriker!.outBy = null;
             nonStriker!.outType = null;
+            nonStriker!.helpedPlayer = null;
             nonStriker!.isNotOut = true;
 
             currentPartnerShip!.currentNotStiker!.run = currentPartnerShip!.currentNotStiker!.run! - (run - noBallRun);
@@ -2818,6 +2876,7 @@ abstract class _ScoreStore with Store {
 
             striker!.outBy = null;
             striker!.outType = null;
+            striker!.helpedPlayer = null;
             striker!.isNotOut = true;
 
             currentPartnerShip!.currentStiker!.run = currentPartnerShip!.currentStiker!.run! - (run - noBallRun);
@@ -2907,6 +2966,7 @@ abstract class _ScoreStore with Store {
             striker!.ball = striker!.ball! - 1;
             striker!.outBy = null;
             striker!.outType = null;
+            striker!.helpedPlayer = null;
             striker!.isNotOut = true;
             currentPartnerShip!.currentStiker!.ball = currentPartnerShip!.currentStiker!.ball! - 1;
           } else {
@@ -2924,6 +2984,7 @@ abstract class _ScoreStore with Store {
             nonStriker = currentInning!.battingLineup!.firstWhere((element) => element.playerId == lastOutPlayer['batsmanId']);
             nonStriker!.outBy = null;
             nonStriker!.outType = null;
+            nonStriker!.helpedPlayer = null;
             nonStriker!.isNotOut = true;
             currentPartnerShip!.currentStiker!.ball = currentPartnerShip!.currentStiker!.ball! - 1;
           }
@@ -2936,6 +2997,7 @@ abstract class _ScoreStore with Store {
 
             nonStriker!.outBy = null;
             nonStriker!.outType = null;
+            nonStriker!.helpedPlayer = null;
             nonStriker!.isNotOut = true;
 
             currentPartnerShip!.currentNotStiker!.ball = currentPartnerShip!.currentNotStiker!.ball! - 1;
@@ -2947,6 +3009,7 @@ abstract class _ScoreStore with Store {
 
             striker!.outBy = null;
             striker!.outType = null;
+            striker!.helpedPlayer = null;
             striker!.isNotOut = true;
 
             currentPartnerShip!.currentStiker!.ball = currentPartnerShip!.currentStiker!.ball! - 1;
@@ -3034,6 +3097,7 @@ abstract class _ScoreStore with Store {
             striker!.ball = striker!.ball! - 1;
             striker!.outBy = null;
             striker!.outType = null;
+            striker!.helpedPlayer = null;
             striker!.isNotOut = true;
             currentPartnerShip!.currentStiker!.ball = currentPartnerShip!.currentStiker!.ball! - 1;
           } else {
@@ -3051,6 +3115,7 @@ abstract class _ScoreStore with Store {
             nonStriker = currentInning!.battingLineup!.firstWhere((element) => element.playerId == lastOutPlayer['batsmanId']);
             nonStriker!.outBy = null;
             nonStriker!.outType = null;
+            nonStriker!.helpedPlayer = null;
             nonStriker!.isNotOut = true;
             currentPartnerShip!.currentStiker!.ball = currentPartnerShip!.currentStiker!.ball! - 1;
           }
@@ -3063,6 +3128,7 @@ abstract class _ScoreStore with Store {
 
             nonStriker!.outBy = null;
             nonStriker!.outType = null;
+            nonStriker!.helpedPlayer = null;
             nonStriker!.isNotOut = true;
 
             currentPartnerShip!.currentNotStiker!.ball = currentPartnerShip!.currentNotStiker!.ball! - 1;
@@ -3074,6 +3140,7 @@ abstract class _ScoreStore with Store {
 
             striker!.outBy = null;
             striker!.outType = null;
+            striker!.helpedPlayer = null;
             striker!.isNotOut = true;
 
             currentPartnerShip!.currentStiker!.ball = currentPartnerShip!.currentStiker!.ball! - 1;
@@ -3165,6 +3232,7 @@ abstract class _ScoreStore with Store {
             striker!.ball = striker!.ball! - 1;
             striker!.outBy = null;
             striker!.outType = null;
+            striker!.helpedPlayer = null;
             striker!.isNotOut = true;
             currentPartnerShip!.currentStiker!.ball = currentPartnerShip!.currentStiker!.ball! - reBallNum;
           } else {
@@ -3181,6 +3249,7 @@ abstract class _ScoreStore with Store {
             nonStriker = currentInning!.battingLineup!.firstWhere((element) => element.playerId == lastOutPlayer['batsmanId']);
             nonStriker!.outBy = null;
             nonStriker!.outType = null;
+            nonStriker!.helpedPlayer = null;
             nonStriker!.isNotOut = true;
             currentPartnerShip!.currentStiker!.ball = currentPartnerShip!.currentStiker!.ball! - reBallNum;
           }
@@ -3193,6 +3262,7 @@ abstract class _ScoreStore with Store {
 
             nonStriker!.outBy = null;
             nonStriker!.outType = null;
+            nonStriker!.helpedPlayer = null;
             nonStriker!.isNotOut = true;
 
             currentPartnerShip!.currentNotStiker!.ball = currentPartnerShip!.currentNotStiker!.ball! - 1;
@@ -3204,6 +3274,7 @@ abstract class _ScoreStore with Store {
 
             striker!.outBy = null;
             striker!.outType = null;
+            striker!.helpedPlayer = null;
             striker!.isNotOut = true;
 
             currentPartnerShip!.currentStiker!.ball = currentPartnerShip!.currentStiker!.ball! - 1;
@@ -3297,6 +3368,7 @@ abstract class _ScoreStore with Store {
             striker!.ball = striker!.ball! - 1;
             striker!.outBy = null;
             striker!.outType = null;
+            striker!.helpedPlayer = null;
             striker!.isNotOut = true;
             currentPartnerShip!.currentStiker!.ball = currentPartnerShip!.currentStiker!.ball! - reBallNum;
           } else {
@@ -3314,6 +3386,7 @@ abstract class _ScoreStore with Store {
             nonStriker = currentInning!.battingLineup!.firstWhere((element) => element.playerId == lastOutPlayer['batsmanId']);
             nonStriker!.outBy = null;
             nonStriker!.outType = null;
+            nonStriker!.helpedPlayer = null;
             nonStriker!.isNotOut = true;
             currentPartnerShip!.currentStiker!.ball = currentPartnerShip!.currentStiker!.ball! - reBallNum;
           }
@@ -3326,6 +3399,7 @@ abstract class _ScoreStore with Store {
 
             nonStriker!.outBy = null;
             nonStriker!.outType = null;
+            nonStriker!.helpedPlayer = null;
             nonStriker!.isNotOut = true;
 
             currentPartnerShip!.currentNotStiker!.ball = currentPartnerShip!.currentNotStiker!.ball! - 1;
@@ -3337,6 +3411,7 @@ abstract class _ScoreStore with Store {
 
             striker!.outBy = null;
             striker!.outType = null;
+            striker!.helpedPlayer = null;
             striker!.isNotOut = true;
 
             currentPartnerShip!.currentStiker!.ball = currentPartnerShip!.currentStiker!.ball! - 1;
@@ -3426,6 +3501,7 @@ abstract class _ScoreStore with Store {
 
             striker!.outBy = null;
             striker!.outType = null;
+            striker!.helpedPlayer = null;
             striker!.isNotOut = true;
             currentPartnerShip!.currentStiker!.run = currentPartnerShip!.currentStiker!.run! - run;
             currentPartnerShip!.currentStiker!.ball = currentPartnerShip!.currentStiker!.ball! - 1;
@@ -3446,6 +3522,7 @@ abstract class _ScoreStore with Store {
 
             nonStriker!.outBy = null;
             nonStriker!.outType = null;
+            nonStriker!.helpedPlayer = null;
             nonStriker!.isNotOut = true;
             currentPartnerShip!.currentStiker!.run = currentPartnerShip!.currentStiker!.run! - run;
             currentPartnerShip!.currentStiker!.ball = currentPartnerShip!.currentStiker!.ball! - 1;
@@ -3460,6 +3537,7 @@ abstract class _ScoreStore with Store {
 
             nonStriker!.outBy = null;
             nonStriker!.outType = null;
+            nonStriker!.helpedPlayer = null;
             nonStriker!.isNotOut = true;
 
             currentPartnerShip!.currentNotStiker!.run = currentPartnerShip!.currentNotStiker!.run! - run;
@@ -3473,6 +3551,7 @@ abstract class _ScoreStore with Store {
 
             striker!.outBy = null;
             striker!.outType = null;
+            striker!.helpedPlayer = null;
             striker!.isNotOut = true;
 
             currentPartnerShip!.currentStiker!.run = currentPartnerShip!.currentStiker!.run! - run;

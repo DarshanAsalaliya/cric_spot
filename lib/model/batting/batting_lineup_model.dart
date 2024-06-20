@@ -17,11 +17,11 @@ class BattingLineUpModel extends HiveObject with _$BattingLineUpModel {
     @HiveField(6) bool? isNotOut,
     @HiveField(7) String? outBy,
     @HiveField(8) String? outType,
+    @HiveField(9) String? helpedPlayer,
   }) = _BattingLineUpModel;
   BattingLineUpModel._();
 
-  factory BattingLineUpModel.fromJson(Map<String, dynamic> json) =>
-      _$BattingLineUpModelFromJson(json);
+  factory BattingLineUpModel.fromJson(Map<String, dynamic> json) => _$BattingLineUpModelFromJson(json);
 
   // BattingLineUpModel(
   //     {this.playerId,

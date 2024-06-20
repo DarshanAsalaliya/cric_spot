@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:cric_spot/config/routes.dart';
 import 'package:cric_spot/core/enum/wicket_type.dart';
 import 'package:cric_spot/core/extensions/color_extension.dart';
 import 'package:cric_spot/core/extensions/text_style_extensions.dart';
@@ -50,6 +51,7 @@ class FallOfWicketPage extends StatelessWidget {
                     borderRadius: BorderRadius.circular(12.0),
                     onChanged: (val) {
                       scoreStore.wicketType = val!;
+                      scoreStore.supporterPlayer = '';
                     },
                     value: scoreStore.wicketType,
                     items: WicketType.values.map((e) {
@@ -113,6 +115,37 @@ class FallOfWicketPage extends StatelessWidget {
                     )
                   : const SizedBox.shrink();
             }),
+            Observer(builder: (_) {
+              return (scoreStore.wicketType == WicketType.catchOut ||
+                      scoreStore.wicketType == WicketType.runoutNonStriker ||
+                      scoreStore.wicketType == WicketType.runoutStriker ||
+                      scoreStore.wicketType == WicketType.stumpping)
+                  ? Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const SizedBox(
+                          height: 16,
+                        ),
+                        Text(
+                          "${scoreStore.wicketType.name} by",
+                          style: context.titleMedium?.copyWith(fontWeight: FontWeight.w600, color: context.onBackground),
+                        ),
+                        const SizedBox(
+                          height: 8,
+                        ),
+                        CricTextFormField(
+                          // controller: strikerController,
+                          hintText: "Player name",
+                          keyboardType: TextInputType.name,
+                          textCapitalization: TextCapitalization.words,
+                          onChanged: (val) {
+                            scoreStore.supporterPlayer = val;
+                          },
+                        ),
+                      ],
+                    )
+                  : const SizedBox.shrink();
+            }),
             const SizedBox(
               height: 16,
             ),
@@ -147,8 +180,8 @@ class FallOfWicketPage extends StatelessWidget {
                             final newPlayer = await scoreStore.fallOfWicket();
 
                             scoreStore.countRun(run: int.parse(run), newPlayer: newPlayer);
-                            if (!context.mounted) return;
-                            GoRouter.of(context).pop();
+                            scoreStore.supporterPlayer = '';
+                            goRouter.pop();
                           },
                     child: const Text("Done"));
               }),

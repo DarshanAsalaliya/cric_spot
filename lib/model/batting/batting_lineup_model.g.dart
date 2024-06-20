@@ -26,13 +26,14 @@ class BattingLineUpModelAdapter extends TypeAdapter<_$BattingLineUpModelImpl> {
       isNotOut: fields[6] as bool?,
       outBy: fields[7] as String?,
       outType: fields[8] as String?,
+      helpedPlayer: fields[9] as String?,
     );
   }
 
   @override
   void write(BinaryWriter writer, _$BattingLineUpModelImpl obj) {
     writer
-      ..writeByte(9)
+      ..writeByte(10)
       ..writeByte(0)
       ..write(obj.playerId)
       ..writeByte(1)
@@ -50,7 +51,9 @@ class BattingLineUpModelAdapter extends TypeAdapter<_$BattingLineUpModelImpl> {
       ..writeByte(7)
       ..write(obj.outBy)
       ..writeByte(8)
-      ..write(obj.outType);
+      ..write(obj.outType)
+      ..writeByte(9)
+      ..write(obj.helpedPlayer);
   }
 
   @override
@@ -80,6 +83,7 @@ _$BattingLineUpModelImpl _$$BattingLineUpModelImplFromJson(
       isNotOut: json['isNotOut'] as bool?,
       outBy: json['outBy'] as String?,
       outType: json['outType'] as String?,
+      helpedPlayer: json['helpedPlayer'] as String?,
     );
 
 Map<String, dynamic> _$$BattingLineUpModelImplToJson(
@@ -94,4 +98,5 @@ Map<String, dynamic> _$$BattingLineUpModelImplToJson(
       'isNotOut': instance.isNotOut,
       'outBy': instance.outBy,
       'outType': instance.outType,
+      'helpedPlayer': instance.helpedPlayer,
     };

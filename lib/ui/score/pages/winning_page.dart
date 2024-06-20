@@ -35,20 +35,16 @@ class WinningPage extends StatelessWidget {
               padding: EdgeInsets.all(50),
               width: MediaQuery.of(context).size.width / 1.5,
               height: MediaQuery.of(context).size.width / 1.5,
-              decoration: BoxDecoration(
-                  color: context.primary,
-                  borderRadius: BorderRadius.circular(
-                      MediaQuery.of(context).size.width / 1.5)),
-              child: Image.network(
-                "https://cdn4.iconfinder.com/data/icons/awards-74/64/Trophy-competition-award-cup-winner-512.png",
+              decoration: BoxDecoration(color: context.primary, borderRadius: BorderRadius.circular(MediaQuery.of(context).size.width / 1.5)),
+              child: Image.asset(
+                "assets/won_trophy.png",
                 // color: Colors.red,
               ),
             ),
             const SizedBox(
               height: 16,
             ),
-            (scoreStore.matchData!.wonName == "tie" ||
-                    scoreStore.matchData!.wonName == null)
+            (scoreStore.matchData!.wonName == "tie" || scoreStore.matchData!.wonName == null)
                 ? const SizedBox.shrink()
                 : Text(
                     scoreStore.matchData!.wonName ?? "",

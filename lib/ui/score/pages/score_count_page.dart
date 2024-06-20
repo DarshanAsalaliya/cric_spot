@@ -190,7 +190,7 @@ class _ScoreCountPageState extends State<ScoreCountPage> {
                                 Observer(builder: (_) {
                                   return batsmanScoreWidget(
                                       context: context,
-                                      batsmanName: scoreStore.striker?.name,
+                                      batsmanName: "${scoreStore.striker?.name}*",
                                       run: scoreStore.striker?.run,
                                       ball: scoreStore.striker?.ball,
                                       four: scoreStore.striker?.four,
@@ -449,6 +449,18 @@ class _ScoreCountPageState extends State<ScoreCountPage> {
                               padding: EdgeInsets.all(8),
                               child: Row(
                                 children: [
+                                  Expanded(
+                                    child: cricFilledButton(
+                                      childText: "Swap",
+                                      onTap: () {
+                                        scoreStore.swapBatsMan();
+                                        // scoreStore.lastSavePartnership();
+                                      },
+                                    ),
+                                  ),
+                                  const SizedBox(
+                                    width: 4,
+                                  ),
                                   Expanded(
                                     child: cricFilledButton(
                                       childText: "Partnerships",

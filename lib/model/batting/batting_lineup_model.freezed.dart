@@ -56,6 +56,10 @@ mixin _$BattingLineUpModel {
   String? get outType => throw _privateConstructorUsedError;
   @HiveField(8)
   set outType(String? value) => throw _privateConstructorUsedError;
+  @HiveField(9)
+  String? get helpedPlayer => throw _privateConstructorUsedError;
+  @HiveField(9)
+  set helpedPlayer(String? value) => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -78,7 +82,8 @@ abstract class $BattingLineUpModelCopyWith<$Res> {
       @HiveField(5) int? six,
       @HiveField(6) bool? isNotOut,
       @HiveField(7) String? outBy,
-      @HiveField(8) String? outType});
+      @HiveField(8) String? outType,
+      @HiveField(9) String? helpedPlayer});
 }
 
 /// @nodoc
@@ -103,6 +108,7 @@ class _$BattingLineUpModelCopyWithImpl<$Res, $Val extends BattingLineUpModel>
     Object? isNotOut = freezed,
     Object? outBy = freezed,
     Object? outType = freezed,
+    Object? helpedPlayer = freezed,
   }) {
     return _then(_value.copyWith(
       playerId: freezed == playerId
@@ -141,6 +147,10 @@ class _$BattingLineUpModelCopyWithImpl<$Res, $Val extends BattingLineUpModel>
           ? _value.outType
           : outType // ignore: cast_nullable_to_non_nullable
               as String?,
+      helpedPlayer: freezed == helpedPlayer
+          ? _value.helpedPlayer
+          : helpedPlayer // ignore: cast_nullable_to_non_nullable
+              as String?,
     ) as $Val);
   }
 }
@@ -162,7 +172,8 @@ abstract class _$$BattingLineUpModelImplCopyWith<$Res>
       @HiveField(5) int? six,
       @HiveField(6) bool? isNotOut,
       @HiveField(7) String? outBy,
-      @HiveField(8) String? outType});
+      @HiveField(8) String? outType,
+      @HiveField(9) String? helpedPlayer});
 }
 
 /// @nodoc
@@ -185,6 +196,7 @@ class __$$BattingLineUpModelImplCopyWithImpl<$Res>
     Object? isNotOut = freezed,
     Object? outBy = freezed,
     Object? outType = freezed,
+    Object? helpedPlayer = freezed,
   }) {
     return _then(_$BattingLineUpModelImpl(
       playerId: freezed == playerId
@@ -223,6 +235,10 @@ class __$$BattingLineUpModelImplCopyWithImpl<$Res>
           ? _value.outType
           : outType // ignore: cast_nullable_to_non_nullable
               as String?,
+      helpedPlayer: freezed == helpedPlayer
+          ? _value.helpedPlayer
+          : helpedPlayer // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -240,7 +256,8 @@ class _$BattingLineUpModelImpl extends _BattingLineUpModel {
       @HiveField(5) this.six,
       @HiveField(6) this.isNotOut,
       @HiveField(7) this.outBy,
-      @HiveField(8) this.outType})
+      @HiveField(8) this.outType,
+      @HiveField(9) this.helpedPlayer})
       : super._();
 
   factory _$BattingLineUpModelImpl.fromJson(Map<String, dynamic> json) =>
@@ -273,10 +290,13 @@ class _$BattingLineUpModelImpl extends _BattingLineUpModel {
   @override
   @HiveField(8)
   String? outType;
+  @override
+  @HiveField(9)
+  String? helpedPlayer;
 
   @override
   String toString() {
-    return 'BattingLineUpModel(playerId: $playerId, name: $name, run: $run, ball: $ball, four: $four, six: $six, isNotOut: $isNotOut, outBy: $outBy, outType: $outType)';
+    return 'BattingLineUpModel(playerId: $playerId, name: $name, run: $run, ball: $ball, four: $four, six: $six, isNotOut: $isNotOut, outBy: $outBy, outType: $outType, helpedPlayer: $helpedPlayer)';
   }
 
   @JsonKey(ignore: true)
@@ -304,7 +324,8 @@ abstract class _BattingLineUpModel extends BattingLineUpModel {
       @HiveField(5) int? six,
       @HiveField(6) bool? isNotOut,
       @HiveField(7) String? outBy,
-      @HiveField(8) String? outType}) = _$BattingLineUpModelImpl;
+      @HiveField(8) String? outType,
+      @HiveField(9) String? helpedPlayer}) = _$BattingLineUpModelImpl;
   _BattingLineUpModel._() : super._();
 
   factory _BattingLineUpModel.fromJson(Map<String, dynamic> json) =
@@ -355,6 +376,11 @@ abstract class _BattingLineUpModel extends BattingLineUpModel {
   String? get outType;
   @HiveField(8)
   set outType(String? value);
+  @override
+  @HiveField(9)
+  String? get helpedPlayer;
+  @HiveField(9)
+  set helpedPlayer(String? value);
   @override
   @JsonKey(ignore: true)
   _$$BattingLineUpModelImplCopyWith<_$BattingLineUpModelImpl> get copyWith =>
