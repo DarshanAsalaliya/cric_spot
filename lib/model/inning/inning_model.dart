@@ -34,18 +34,9 @@ class InningModel extends HiveObject with _$InningModel {
   }) = _InningModel;
   InningModel._();
 
-  factory InningModel.fromJson(Map<String, dynamic> json) =>
-      _$InningModelFromJson(json)
-        ..battingLineup = (json['battingLineup'] as List<dynamic>?)
-            ?.map((e) => BattingLineUpModel.fromJson(e as Map<String, dynamic>))
-            .toList()
-        ..bowlingLineup = (json['bowlingLineup'] as List<dynamic>?)
-            ?.map((e) => BowlingLineUpModel.fromJson(e as Map<String, dynamic>))
-            .toList()
-        ..extraRun = json['extraRun'] != null
-            ? ExtraRunModel.fromJson(json['extraRun'] as Map<String, dynamic>)
-            : null
-        ..partnerShips = (json['partnerShips'] as List<dynamic>?)
-            ?.map((e) => PartnerShipModel.fromJson(e as Map<String, dynamic>))
-            .toList();
+  factory InningModel.fromJson(Map<String, dynamic> json) => _$InningModelFromJson(json)
+    ..battingLineup = (json['battingLineup'] as List<dynamic>?)?.map((e) => BattingLineUpModel.fromJson(e as Map<String, dynamic>)).toList()
+    ..bowlingLineup = (json['bowlingLineup'] as List<dynamic>?)?.map((e) => BowlingLineUpModel.fromJson(e as Map<String, dynamic>)).toList()
+    ..extraRun = json['extraRun'] != null ? ExtraRunModel.fromJson(json['extraRun'] as Map<String, dynamic>) : null
+    ..partnerShips = (json['partnerShips'] as List<dynamic>?)?.map((e) => PartnerShipModel.fromJson(e as Map<String, dynamic>)).toList();
 }

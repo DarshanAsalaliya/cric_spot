@@ -1,5 +1,4 @@
 import 'dart:developer';
-
 import 'package:cric_spot/core/enum/run_count_type.dart';
 import 'package:cric_spot/core/enum/wicket_type.dart';
 import 'package:cric_spot/model/batting/batting_lineup_model.dart';
