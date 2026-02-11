@@ -2,13 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'cric_spot_theme.dart';
 
-ThemeData appTheme(
-    BuildContext context,
-    ColorScheme colorScheme,
-    String fontPreference,
-    TextTheme textTheme,
-    Color dividerColor,
-    SystemUiOverlayStyle systemUiOverlayStyle) {
+ThemeData appTheme(BuildContext context, ColorScheme colorScheme, String fontPreference, TextTheme textTheme, Color dividerColor,
+    DialogThemeData dialogTheme, SystemUiOverlayStyle systemUiOverlayStyle) {
   return ThemeData.from(colorScheme: colorScheme).copyWith(
     textTheme: textTheme,
     colorScheme: colorScheme,

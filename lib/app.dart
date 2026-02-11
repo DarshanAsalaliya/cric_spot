@@ -20,8 +20,7 @@ class CricSpotApp extends StatelessWidget {
           Provider(create: (_) => getIt.get<TeamStore>()),
         ],
         builder: (context, child) {
-          return DynamicColorBuilder(
-              builder: (ColorScheme? lightDynamic, ColorScheme? darkDynamic) {
+          return DynamicColorBuilder(builder: (ColorScheme? lightDynamic, ColorScheme? darkDynamic) {
             // const bool isDynamic = false;
             // final ThemeMode themeMode = ThemeMode.values[0];
             const int color = 0xFF795548;
@@ -56,20 +55,10 @@ class CricSpotApp extends StatelessWidget {
               title: 'Flutter Demo',
               routerConfig: goRouter,
               debugShowCheckedModeBanner: false,
-              theme: appTheme(
-                  context,
-                  lightColorScheme,
-                  fontPreference,
-                  lightTextTheme,
-                  ThemeData.light().dividerColor,
-                  SystemUiOverlayStyle.dark),
-              darkTheme: appTheme(
-                  context,
-                  darkColorScheme,
-                  fontPreference,
-                  darkTextTheme,
-                  ThemeData.dark().dividerColor,
-                  SystemUiOverlayStyle.light),
+              theme: appTheme(context, lightColorScheme, fontPreference, lightTextTheme, ThemeData.light().dividerColor,
+                  ThemeData.light().dialogTheme, SystemUiOverlayStyle.dark),
+              darkTheme: appTheme(context, darkColorScheme, fontPreference, darkTextTheme, ThemeData.dark().dividerColor,
+                  ThemeData.dark().dialogTheme, SystemUiOverlayStyle.light),
             );
           });
         });
