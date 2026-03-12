@@ -1,11 +1,10 @@
 import 'package:autocomplete_textfield/autocomplete_textfield.dart';
+import 'package:cric_spot/bloc/score/score_bloc.dart';
 import 'package:cric_spot/core/extensions/color_extension.dart';
 import 'package:cric_spot/core/extensions/text_style_extensions.dart';
-import 'package:cric_spot/main.dart';
 import 'package:cric_spot/model/bowling/bowling_lineup_model.dart';
-import 'package:cric_spot/store/score/score_store.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
 class SelectBowlerPage extends StatelessWidget {
@@ -17,7 +16,7 @@ class SelectBowlerPage extends StatelessWidget {
         GlobalKey();
     TextEditingController bowlerController = TextEditingController();
 
-    final scoreStore = getIt.get<ScoreStore>();
+    final scoreBloc = context.read<ScoreBloc>();
     return Scaffold(
       appBar: AppBar(
         title: const Text('Select Bowler'),
@@ -73,7 +72,7 @@ class SelectBowlerPage extends StatelessWidget {
                 controller: bowlerController,
                 clearOnSubmit: false,
                 textInputAction: TextInputAction.next,
-                suggestions: scoreStore.currentInning!.bowlingLineup!,
+                suggestions: scoreBloc.currentInning!.bowlingLineup!,
                 keyboardType: TextInputType.name,
                 cursorColor: context.primary,
                 cursorWidth: 3,
@@ -88,11 +87,11 @@ class SelectBowlerPage extends StatelessWidget {
                   );
                 },
                 textChanged: (val) {
-                  scoreStore.newBowler = val;
+                  scoreBloc.add(NewBowlerNameChanged(val));
                 },
                 itemSubmitted: (bowler) {
                   bowlerController.text = bowler.name!;
-                  scoreStore.newBowler = bowler.name!;
+                  scoreBloc.add(NewBowlerNameChanged(bowler.name!));
                   return bowler.name!;
                 },
                 itemSorter: (a, b) => a.name == b.name
@@ -108,13 +107,12 @@ class SelectBowlerPage extends StatelessWidget {
             ),
             SizedBox(
               width: double.infinity,
-              child: Observer(builder: (_) {
+              child: BlocBuilder<ScoreBloc, ScoreState>(builder: (context, state) {
                 return FilledButton(
-                    onPressed: scoreStore.newBowler == ''
+                    onPressed: state.newBowler == ''
                         ? null
-                        : () async {
-                            await scoreStore.selectNewBowler();
-                            if (!context.mounted) return;
+                        : () {
+                            context.read<ScoreBloc>().add(const SelectNewBowler());
                             GoRouter.of(context).pop();
                           },
                     child: const Text("Done"));

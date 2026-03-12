@@ -1,10 +1,9 @@
 import 'package:cric_spot/core/extensions/color_extension.dart';
 import 'package:cric_spot/core/extensions/text_style_extensions.dart';
 import 'package:cric_spot/core/widgtes/cric_widgets/cric_text_field.dart';
-import 'package:cric_spot/main.dart';
-import 'package:cric_spot/store/home/home_store.dart';
+import 'package:cric_spot/bloc/match_setup/match_setup_bloc.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
 class AdwanceSettingPage extends StatelessWidget {
@@ -12,13 +11,13 @@ class AdwanceSettingPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final homeStore = getIt.get<HomeStore>();
+    final bloc = context.read<MatchSetupBloc>();
     TextEditingController playerPerMatchController = TextEditingController();
     TextEditingController noBallRunController = TextEditingController();
     TextEditingController wideBallRunController = TextEditingController();
-    playerPerMatchController.text = homeStore.playerPerMatch;
-    noBallRunController.text = homeStore.noBallRun;
-    wideBallRunController.text = homeStore.wideBallRun;
+    playerPerMatchController.text = bloc.state.playerPerMatch;
+    noBallRunController.text = bloc.state.noBallRun;
+    wideBallRunController.text = bloc.state.wideBallRun;
 
     return Scaffold(
       appBar: AppBar(
@@ -43,7 +42,7 @@ class AdwanceSettingPage extends StatelessWidget {
               hintText: "11",
               keyboardType: TextInputType.number,
               onChanged: (val) {
-                homeStore.playerPerMatch = val;
+                bloc.add(MatchSetupPlayerPerMatchChanged(val));
               },
             ),
             const SizedBox(
@@ -56,11 +55,11 @@ class AdwanceSettingPage extends StatelessWidget {
                   "No Ball",
                   style: context.titleMedium?.copyWith(fontWeight: FontWeight.w600, color: context.onBackground),
                 ),
-                Observer(builder: (context) {
+                BlocBuilder<MatchSetupBloc, MatchSetupState>(builder: (context, state) {
                   return Switch(
-                      value: homeStore.isNoBall,
+                      value: state.isNoBall,
                       onChanged: (value) {
-                        homeStore.isNoBall = value;
+                        bloc.add(MatchSetupNoBallToggled(value));
                       });
                 })
               ],
@@ -68,8 +67,8 @@ class AdwanceSettingPage extends StatelessWidget {
             const SizedBox(
               height: 8,
             ),
-            Observer(builder: (_) {
-              return homeStore.isNoBall
+            BlocBuilder<MatchSetupBloc, MatchSetupState>(builder: (context, state) {
+              return state.isNoBall
                   ? Card(
                       child: Container(
                         padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -82,11 +81,11 @@ class AdwanceSettingPage extends StatelessWidget {
                                   "Re-ball",
                                   style: context.bodyMedium,
                                 )),
-                                Observer(builder: (context) {
+                                BlocBuilder<MatchSetupBloc, MatchSetupState>(builder: (context, state) {
                                   return Switch(
-                                      value: homeStore.noBallReBall,
+                                      value: state.noBallReBall,
                                       onChanged: (value) {
-                                        homeStore.noBallReBallSwitch(value);
+                                        bloc.add(MatchSetupNoBallReBallToggled(value));
                                       });
                                 })
                               ],
@@ -107,7 +106,7 @@ class AdwanceSettingPage extends StatelessWidget {
                                   width: 60,
                                   child: CricTextFormField(
                                     onChanged: (val) {
-                                      homeStore.noBallRun = val;
+                                      bloc.add(MatchSetupNoBallRunChanged(val));
                                     },
                                     controller: noBallRunController,
                                     hintText: "1",
@@ -135,11 +134,11 @@ class AdwanceSettingPage extends StatelessWidget {
                   "Wide Ball",
                   style: context.titleMedium?.copyWith(fontWeight: FontWeight.w600, color: context.onBackground),
                 ),
-                Observer(builder: (context) {
+                BlocBuilder<MatchSetupBloc, MatchSetupState>(builder: (context, state) {
                   return Switch(
-                      value: homeStore.isWideBall,
+                      value: state.isWideBall,
                       onChanged: (value) {
-                        homeStore.isWideBall = value;
+                        bloc.add(MatchSetupWideBallToggled(value));
                       });
                 })
               ],
@@ -147,8 +146,8 @@ class AdwanceSettingPage extends StatelessWidget {
             const SizedBox(
               height: 8,
             ),
-            Observer(builder: (_) {
-              return homeStore.isWideBall
+            BlocBuilder<MatchSetupBloc, MatchSetupState>(builder: (context, state) {
+              return state.isWideBall
                   ? Card(
                       child: Container(
                         padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -161,11 +160,11 @@ class AdwanceSettingPage extends StatelessWidget {
                                   "Re-ball",
                                   style: context.bodyMedium,
                                 )),
-                                Observer(builder: (context) {
+                                BlocBuilder<MatchSetupBloc, MatchSetupState>(builder: (context, state) {
                                   return Switch(
-                                      value: homeStore.wideReBall,
+                                      value: state.wideReBall,
                                       onChanged: (value) {
-                                        homeStore.wideBallReBallSwitch(value);
+                                        bloc.add(MatchSetupWideBallReBallToggled(value));
                                       });
                                 })
                               ],
@@ -189,7 +188,7 @@ class AdwanceSettingPage extends StatelessWidget {
                                     hintText: "1",
                                     keyboardType: TextInputType.number,
                                     onChanged: (val) {
-                                      homeStore.wideBallRun = val;
+                                      bloc.add(MatchSetupWideBallRunChanged(val));
                                     },
                                   ),
                                 ),

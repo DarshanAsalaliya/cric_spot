@@ -1,15 +1,15 @@
 import 'package:autocomplete_textfield/autocomplete_textfield.dart';
+import 'package:cric_spot/config/routes.dart';
 import 'package:cric_spot/config/routes_name.dart';
 import 'package:cric_spot/core/enum/opted_type.dart';
 import 'package:cric_spot/core/enum/team_type.dart';
 import 'package:cric_spot/core/extensions/color_extension.dart';
 import 'package:cric_spot/core/extensions/text_style_extensions.dart';
 import 'package:cric_spot/core/widgtes/cric_widgets/cric_text_field.dart';
-import 'package:cric_spot/main.dart';
+import 'package:cric_spot/bloc/match_setup/match_setup_bloc.dart';
 import 'package:cric_spot/model/team/team_model.dart';
-import 'package:cric_spot/store/home/home_store.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
 class NewMatchPage extends StatefulWidget {
@@ -24,8 +24,8 @@ class _NewMatchPageState extends State<NewMatchPage> {
   GlobalKey<AutoCompleteTextFieldState<TeamModel>> hostkey = GlobalKey();
   @override
   Widget build(BuildContext context) {
-    final homeStore = getIt.get<HomeStore>();
-    homeStore.getAllData();
+    final bloc = context.read<MatchSetupBloc>();
+    bloc.add(const MatchSetupLoadTeams());
     TextEditingController hostTeamController = TextEditingController();
     TextEditingController visitorTeamController = TextEditingController();
     TextEditingController overController = TextEditingController();
@@ -40,8 +40,7 @@ class _NewMatchPageState extends State<NewMatchPage> {
             ),
             Text(
               "Teams",
-              style: context.titleMedium?.copyWith(
-                  fontWeight: FontWeight.w600, color: context.onBackground),
+              style: context.titleMedium?.copyWith(fontWeight: FontWeight.w600, color: context.onBackground),
             ),
             const SizedBox(
               height: 16,
@@ -51,7 +50,7 @@ class _NewMatchPageState extends State<NewMatchPage> {
                 controller: hostTeamController,
                 clearOnSubmit: false,
                 textInputAction: TextInputAction.next,
-                suggestions: homeStore.teams,
+                suggestions: context.read<MatchSetupBloc>().state.teams,
                 keyboardType: TextInputType.name,
                 cursorColor: context.primary,
                 cursorWidth: 3,
@@ -65,11 +64,11 @@ class _NewMatchPageState extends State<NewMatchPage> {
                   );
                 },
                 textChanged: (val) {
-                  homeStore.hostTeamNameChange(val);
+                  context.read<MatchSetupBloc>().add(MatchSetupHostTeamNameChanged(val));
                 },
                 itemSubmitted: (team) {
                   hostTeamController.text = team.name!;
-                  homeStore.hostTeamNameChange(team.name!);
+                  context.read<MatchSetupBloc>().add(MatchSetupHostTeamNameChanged(team.name!));
                   return team.name!;
                 },
                 itemSorter: (a, b) => a.name == b.name
@@ -80,8 +79,8 @@ class _NewMatchPageState extends State<NewMatchPage> {
                 itemFilter: (team, input) {
                   return team.name!.contains(input);
                 }),
-            Observer(builder: (_) {
-              return homeStore.hostTeamNameError == null
+            BlocBuilder<MatchSetupBloc, MatchSetupState>(builder: (context, state) {
+              return state.hostTeamNameError == null
                   ? const SizedBox.shrink()
                   : Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -90,7 +89,7 @@ class _NewMatchPageState extends State<NewMatchPage> {
                           height: 4,
                         ),
                         Text(
-                          homeStore.hostTeamNameError!,
+                          state.hostTeamNameError!,
                           style: TextStyle(color: context.primary),
                         ),
                       ],
@@ -104,7 +103,7 @@ class _NewMatchPageState extends State<NewMatchPage> {
                 controller: visitorTeamController,
                 clearOnSubmit: false,
                 textInputAction: TextInputAction.next,
-                suggestions: homeStore.teams,
+                suggestions: context.read<MatchSetupBloc>().state.teams,
                 keyboardType: TextInputType.name,
                 cursorColor: context.primary,
                 cursorWidth: 3,
@@ -117,11 +116,11 @@ class _NewMatchPageState extends State<NewMatchPage> {
                   );
                 },
                 textChanged: (val) {
-                  homeStore.visitorTeamNameChange(val);
+                  context.read<MatchSetupBloc>().add(MatchSetupVisitorTeamNameChanged(val));
                 },
                 itemSubmitted: (team) {
                   visitorTeamController.text = team.name!;
-                  homeStore.visitorTeamNameChange(team.name!);
+                  context.read<MatchSetupBloc>().add(MatchSetupVisitorTeamNameChanged(team.name!));
                   return team.name!;
                 },
                 itemSorter: (a, b) => a.name == b.name
@@ -132,8 +131,8 @@ class _NewMatchPageState extends State<NewMatchPage> {
                 itemFilter: (team, input) {
                   return team.name!.contains(input);
                 }),
-            Observer(builder: (_) {
-              return homeStore.visitorTeamNameError == null
+            BlocBuilder<MatchSetupBloc, MatchSetupState>(builder: (context, state) {
+              return state.visitorTeamNameError == null
                   ? const SizedBox.shrink()
                   : Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -142,7 +141,7 @@ class _NewMatchPageState extends State<NewMatchPage> {
                           height: 4,
                         ),
                         Text(
-                          homeStore.visitorTeamNameError!,
+                          state.visitorTeamNameError!,
                           style: TextStyle(color: context.primary),
                         ),
                       ],
@@ -153,33 +152,30 @@ class _NewMatchPageState extends State<NewMatchPage> {
             ),
             Text(
               "Toss won by?",
-              style: context.titleMedium?.copyWith(
-                  fontWeight: FontWeight.w600, color: context.onBackground),
+              style: context.titleMedium?.copyWith(fontWeight: FontWeight.w600, color: context.onBackground),
             ),
             const SizedBox(
               height: 16,
             ),
-            Observer(builder: (_) {
+            BlocBuilder<MatchSetupBloc, MatchSetupState>(builder: (context, state) {
               return Row(
                 children: [
                   Expanded(
                     child: InkWell(
                       onTap: () {
-                        homeStore.tossWon(TeamType.host);
+                        context.read<MatchSetupBloc>().add(const MatchSetupTossWonChanged(TeamType.host));
                       },
                       child: Card(
                         child: Row(
                           children: [
                             Radio(
                                 value: TeamType.host,
-                                groupValue: homeStore.tossWonBy,
+                                groupValue: state.tossWonBy,
                                 onChanged: (value) {
-                                  homeStore.tossWon(value);
+                                  context.read<MatchSetupBloc>().add(MatchSetupTossWonChanged(value!));
                                 }),
-                            Observer(builder: (_) {
-                              return Text(homeStore.hostTeamName == ""
-                                  ? "Host Team"
-                                  : homeStore.hostTeamName);
+                            BlocBuilder<MatchSetupBloc, MatchSetupState>(builder: (context, state) {
+                              return Text(state.hostTeamName == "" ? "Host Team" : state.hostTeamName);
                             })
                           ],
                         ),
@@ -189,21 +185,19 @@ class _NewMatchPageState extends State<NewMatchPage> {
                   Expanded(
                     child: InkWell(
                       onTap: () {
-                        homeStore.tossWon(TeamType.visitor);
+                        context.read<MatchSetupBloc>().add(const MatchSetupTossWonChanged(TeamType.visitor));
                       },
                       child: Card(
                         child: Row(
                           children: [
                             Radio(
                                 value: TeamType.visitor,
-                                groupValue: homeStore.tossWonBy,
+                                groupValue: state.tossWonBy,
                                 onChanged: (value) {
-                                  homeStore.tossWon(value);
+                                  context.read<MatchSetupBloc>().add(MatchSetupTossWonChanged(value!));
                                 }),
-                            Observer(builder: (_) {
-                              return Text(homeStore.visitorTeamName == ""
-                                  ? "Visitor Team"
-                                  : homeStore.visitorTeamName);
+                            BlocBuilder<MatchSetupBloc, MatchSetupState>(builder: (context, state) {
+                              return Text(state.visitorTeamName == "" ? "Visitor Team" : state.visitorTeamName);
                             })
                           ],
                         ),
@@ -218,28 +212,27 @@ class _NewMatchPageState extends State<NewMatchPage> {
             ),
             Text(
               "Opted to?",
-              style: context.titleMedium?.copyWith(
-                  fontWeight: FontWeight.w600, color: context.onBackground),
+              style: context.titleMedium?.copyWith(fontWeight: FontWeight.w600, color: context.onBackground),
             ),
             const SizedBox(
               height: 16,
             ),
-            Observer(builder: (_) {
+            BlocBuilder<MatchSetupBloc, MatchSetupState>(builder: (context, state) {
               return Row(
                 children: [
                   Expanded(
                     child: InkWell(
                       onTap: () {
-                        homeStore.optedBy(OptedType.bat);
+                        context.read<MatchSetupBloc>().add(const MatchSetupOptedChanged(OptedType.bat));
                       },
                       child: Card(
                         child: Row(
                           children: [
                             Radio(
                                 value: OptedType.bat,
-                                groupValue: homeStore.opted,
+                                groupValue: state.opted,
                                 onChanged: (value) {
-                                  homeStore.optedBy(value);
+                                  context.read<MatchSetupBloc>().add(MatchSetupOptedChanged(value!));
                                 }),
                             const Text("Bat")
                           ],
@@ -250,16 +243,16 @@ class _NewMatchPageState extends State<NewMatchPage> {
                   Expanded(
                     child: InkWell(
                       onTap: () {
-                        homeStore.optedBy(OptedType.bowl);
+                        context.read<MatchSetupBloc>().add(const MatchSetupOptedChanged(OptedType.bowl));
                       },
                       child: Card(
                         child: Row(
                           children: [
                             Radio(
                                 value: OptedType.bowl,
-                                groupValue: homeStore.opted,
+                                groupValue: state.opted,
                                 onChanged: (value) {
-                                  homeStore.optedBy(value);
+                                  context.read<MatchSetupBloc>().add(MatchSetupOptedChanged(value!));
                                 }),
                             const Text("Bowl")
                           ],
@@ -275,8 +268,7 @@ class _NewMatchPageState extends State<NewMatchPage> {
             ),
             Text(
               "Overs?",
-              style: context.titleMedium?.copyWith(
-                  fontWeight: FontWeight.w600, color: context.onBackground),
+              style: context.titleMedium?.copyWith(fontWeight: FontWeight.w600, color: context.onBackground),
             ),
             const SizedBox(
               height: 16,
@@ -286,12 +278,11 @@ class _NewMatchPageState extends State<NewMatchPage> {
               hintText: "Overs",
               keyboardType: TextInputType.number,
               onChanged: (val) {
-                homeStore.over = val;
-                homeStore.overError = null;
+                context.read<MatchSetupBloc>().add(MatchSetupOverChanged(val));
               },
             ),
-            Observer(builder: (_) {
-              return homeStore.overError == null
+            BlocBuilder<MatchSetupBloc, MatchSetupState>(builder: (context, state) {
+              return state.overError == null
                   ? const SizedBox.shrink()
                   : Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -300,7 +291,7 @@ class _NewMatchPageState extends State<NewMatchPage> {
                           height: 4,
                         ),
                         Text(
-                          homeStore.overError!,
+                          state.overError!,
                           style: TextStyle(color: context.primary),
                         ),
                       ],
@@ -314,8 +305,7 @@ class _NewMatchPageState extends State<NewMatchPage> {
                 Expanded(
                   child: ElevatedButton(
                       onPressed: () {
-                        GoRouter.of(context)
-                            .push(RoutesName.adwanceSetting.path);
+                        GoRouter.of(context).push(RoutesName.adwanceSetting.path);
                       },
                       child: const Text("Adwance Setting")),
                 ),
@@ -325,12 +315,16 @@ class _NewMatchPageState extends State<NewMatchPage> {
                 Expanded(
                     child: FilledButton(
                         onPressed: () {
-                          homeStore.isMatchNew = true;
-                          // GoRouter.of(context).push(RoutesName.scoreCount.path);
-                          homeStore.validate();
-                          if (homeStore.canStartMatch) {
-                            GoRouter.of(context)
-                                .push(RoutesName.playerSelect.path);
+                          final bloc = context.read<MatchSetupBloc>();
+                          bloc.add(const MatchSetupSetIsMatchNew(true));
+                          bloc.add(const MatchSetupValidate());
+                          final currentState = bloc.state;
+                          // Validate manually for immediate navigation check
+                          if (currentState.hostTeamName.isNotEmpty &&
+                              currentState.visitorTeamName.isNotEmpty &&
+                              currentState.over.isNotEmpty &&
+                              currentState.hostTeamName != currentState.visitorTeamName) {
+                            goRouter.push(RoutesName.playerSelect.path);
                           }
                         },
                         child: const Text("Start Match")))
@@ -389,7 +383,7 @@ class _NewMatchPageState extends State<NewMatchPage> {
             //           hintText: "Visitor Team",
             //         ),
             //       );
-            //     }),            
+            //     }),
 
 
 /// simple auto feild text

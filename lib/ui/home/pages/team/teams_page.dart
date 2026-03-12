@@ -1,11 +1,11 @@
 import 'package:cric_spot/core/extensions/text_style_extensions.dart';
 import 'package:cric_spot/core/widgtes/cric_widgets/cric_modal.dart';
 import 'package:cric_spot/core/widgtes/cric_widgets/cric_text_field.dart';
-import 'package:cric_spot/main.dart';
+import 'package:cric_spot/bloc/team/team_cubit.dart';
+import 'package:cric_spot/bloc/team/team_state.dart';
 import 'package:cric_spot/model/team/team_model.dart';
-import 'package:cric_spot/store/team/team_store.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
 class TeamsPage extends StatelessWidget {
@@ -13,19 +13,18 @@ class TeamsPage extends StatelessWidget {
 
   final TextEditingController teamNameController = TextEditingController();
   final FocusNode _focusNode = FocusNode();
-  final teamStore = getIt.get<TeamStore>();
 
   @override
   Widget build(BuildContext context) {
-    teamStore.teams();
+    context.read<TeamCubit>().loadTeams();
     return Scaffold(
       body: Container(
         padding: const EdgeInsets.symmetric(horizontal: 16),
-        child: Observer(builder: (_) {
+        child: BlocBuilder<TeamCubit, TeamState>(builder: (context, state) {
           return ListView.builder(
-              itemCount: teamStore.teamModelList.length,
+              itemCount: state.teamModelList.length,
               itemBuilder: (context, index) {
-                return teamCard(context, teamStore.teamModelList[index]);
+                return teamCard(context, state.teamModelList[index]);
               });
         }),
       ),
@@ -57,11 +56,11 @@ class TeamsPage extends StatelessWidget {
         confirmationButton: TextButton(
           onPressed: () {
             if (team == null) {
-              teamStore.addTeam(TeamModel(
+              context.read<TeamCubit>().addTeam(TeamModel(
                   name: teamNameController.text, match: 0, win: 0, loss: 0));
             } else {
               team.name = teamNameController.text;
-              teamStore.updateTeam(team);
+              context.read<TeamCubit>().updateTeam(team);
             }
 
             teamNameController.clear();
@@ -88,7 +87,7 @@ class TeamsPage extends StatelessWidget {
         title: const Text("Are you sure?"),
         confirmationButton: TextButton(
             onPressed: () {
-              teamStore.removeTeam(key);
+              context.read<TeamCubit>().removeTeam(key);
               GoRouter.of(context).pop();
             },
             child: const Text('Delete')));

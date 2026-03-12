@@ -2,11 +2,10 @@ import 'package:cric_spot/config/routes_name.dart';
 import 'package:cric_spot/core/extensions/color_extension.dart';
 import 'package:cric_spot/core/extensions/text_style_extensions.dart';
 import 'package:cric_spot/core/widgtes/cric_widgets/cric_text_field.dart';
-import 'package:cric_spot/main.dart';
-import 'package:cric_spot/store/home/home_store.dart';
-import 'package:cric_spot/store/score/score_store.dart';
+import 'package:cric_spot/bloc/match_setup/match_setup_bloc.dart';
+import 'package:cric_spot/bloc/score/score_bloc.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
 class PlayerSelectPage extends StatelessWidget {
@@ -14,8 +13,7 @@ class PlayerSelectPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final homeStore = getIt.get<HomeStore>();
-    final scoreStore = getIt.get<ScoreStore>();
+    final matchSetupBloc = context.read<MatchSetupBloc>();
 
     TextEditingController strikerController = TextEditingController();
     TextEditingController nonStrikerController = TextEditingController();
@@ -46,13 +44,12 @@ class PlayerSelectPage extends StatelessWidget {
               keyboardType: TextInputType.name,
               textCapitalization: TextCapitalization.words,
               onChanged: (val) {
-                homeStore.strikerName = val;
-                homeStore.strikerNameError = null;
+                matchSetupBloc.add(MatchSetupStrikerNameChanged(val));
                 // homeStore.hostTeamNameChange(val);
               },
             ),
-            Observer(builder: (_) {
-              return homeStore.strikerNameError == null
+            BlocBuilder<MatchSetupBloc, MatchSetupState>(builder: (context, state) {
+              return state.strikerNameError == null
                   ? const SizedBox.shrink()
                   : Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -61,7 +58,7 @@ class PlayerSelectPage extends StatelessWidget {
                           height: 4,
                         ),
                         Text(
-                          homeStore.strikerNameError!,
+                          state.strikerNameError!,
                           style: TextStyle(color: context.primary),
                         ),
                       ],
@@ -84,13 +81,12 @@ class PlayerSelectPage extends StatelessWidget {
               keyboardType: TextInputType.name,
               textCapitalization: TextCapitalization.words,
               onChanged: (val) {
-                homeStore.nonStrikerName = val;
-                homeStore.nonStrikerNameError = null;
+                matchSetupBloc.add(MatchSetupNonStrikerNameChanged(val));
                 // homeStore.visitorTeamNameChange(val);
               },
             ),
-            Observer(builder: (_) {
-              return homeStore.nonStrikerNameError == null
+            BlocBuilder<MatchSetupBloc, MatchSetupState>(builder: (context, state) {
+              return state.nonStrikerNameError == null
                   ? const SizedBox.shrink()
                   : Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -99,7 +95,7 @@ class PlayerSelectPage extends StatelessWidget {
                           height: 4,
                         ),
                         Text(
-                          homeStore.nonStrikerNameError!,
+                          state.nonStrikerNameError!,
                           style: TextStyle(color: context.primary),
                         ),
                       ],
@@ -126,13 +122,12 @@ class PlayerSelectPage extends StatelessWidget {
               keyboardType: TextInputType.name,
               textCapitalization: TextCapitalization.words,
               onChanged: (val) {
-                homeStore.openingBowlerName = val;
-                homeStore.openingBowlerNameError = null;
+                matchSetupBloc.add(MatchSetupOpeningBowlerNameChanged(val));
                 // homeStore.visitorTeamNameChange(val);
               },
             ),
-            Observer(builder: (_) {
-              return homeStore.openingBowlerNameError == null
+            BlocBuilder<MatchSetupBloc, MatchSetupState>(builder: (context, state) {
+              return state.openingBowlerNameError == null
                   ? const SizedBox.shrink()
                   : Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -141,7 +136,7 @@ class PlayerSelectPage extends StatelessWidget {
                           height: 4,
                         ),
                         Text(
-                          homeStore.openingBowlerNameError!,
+                          state.openingBowlerNameError!,
                           style: TextStyle(color: context.primary),
                         ),
                       ],
@@ -152,19 +147,34 @@ class PlayerSelectPage extends StatelessWidget {
             ),
             FilledButton(
                 onPressed: () async {
-                  homeStore.validateSelectOpener();
-                  if (homeStore.canSelectOpeningPlayer) {
-                    if (homeStore.isMatchNew) {
-                      final matchId = await homeStore.createNewMatch();
-                      if (!context.mounted) return;
-                      GoRouter.of(context).pop();
-                      GoRouter.of(context).pushNamed(RoutesName.scoreCount.name,
-                          pathParameters: {'matchId': matchId.toString()});
+                  final matchSetupBloc = context.read<MatchSetupBloc>();
+                  matchSetupBloc.add(const MatchSetupValidateOpener());
+                  // Check validation inline
+                  final currentState = matchSetupBloc.state;
+                  if (currentState.strikerName.isNotEmpty &&
+                      currentState.nonStrikerName.isNotEmpty &&
+                      currentState.openingBowlerName.isNotEmpty) {
+                    if (currentState.isMatchNew) {
+                      matchSetupBloc.add(const MatchSetupCreateMatch());
+                      // Listen for match creation via stream
+                      await for (final state in matchSetupBloc.stream) {
+                        if (state.status == MatchSetupStatus.created && state.matchId != null) {
+                          if (!context.mounted) return;
+                          GoRouter.of(context).pop();
+                          GoRouter.of(context).pushNamed(RoutesName.scoreCount.name,
+                              pathParameters: {'matchId': state.matchId!});
+                          break;
+                        }
+                        if (state.status == MatchSetupStatus.error) {
+                          break;
+                        }
+                      }
                     } else {
-                      scoreStore.changeInning(
-                          strikerName: homeStore.strikerName,
-                          nonStrikerName: homeStore.nonStrikerName,
-                          bowlerName: homeStore.openingBowlerName);
+                      context.read<ScoreBloc>().add(ChangeInning(
+                          striker: currentState.strikerName,
+                          nonStriker: currentState.nonStrikerName,
+                          bowler: currentState.openingBowlerName));
+                      if (!context.mounted) return;
                       GoRouter.of(context).pop();
                     }
                   }

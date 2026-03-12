@@ -1,10 +1,10 @@
+import 'package:cric_spot/bloc/home/home_cubit.dart';
+import 'package:cric_spot/bloc/home/home_state.dart';
 import 'package:cric_spot/core/enum/page_type.dart';
 import 'package:cric_spot/core/extensions/color_extension.dart';
-import 'package:cric_spot/store/home/home_store.dart';
 import 'package:cric_spot/ui/home/widgets/content_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 final GlobalKey<ScaffoldState> _scaffoldStateKey = GlobalKey<ScaffoldState>();
 
@@ -28,7 +28,6 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final homeStore = Provider.of<HomeStore>(context);
     return Scaffold(
       key: _scaffoldStateKey,
       appBar: AppBar(
@@ -41,7 +40,7 @@ class HomePage extends StatelessWidget {
         ],
       ),
       body: const ContentWidget(),
-      bottomNavigationBar: Observer(builder: (_) {
+      bottomNavigationBar: BlocBuilder<HomeCubit, HomeState>(builder: (context, state) {
         return Theme(
           data: Theme.of(context).copyWith(
             splashFactory: NoSplash.splashFactory,
@@ -49,8 +48,8 @@ class HomePage extends StatelessWidget {
           child: NavigationBar(
             elevation: 1,
             backgroundColor: context.surface,
-            selectedIndex: homeStore.selectedIndex,
-            onDestinationSelected: (index) => homeStore.currentIndex(index),
+            selectedIndex: state.selectedIndex,
+            onDestinationSelected: (index) => context.read<HomeCubit>().changeIndex(index),
             destinations: destinations
                 .sublist(0, 3)
                 .map((e) => NavigationDestination(

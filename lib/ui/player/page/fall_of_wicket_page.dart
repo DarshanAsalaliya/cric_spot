@@ -1,15 +1,14 @@
 import 'dart:developer';
 
+import 'package:cric_spot/bloc/score/score_bloc.dart';
 import 'package:cric_spot/config/routes.dart';
 import 'package:cric_spot/core/enum/wicket_type.dart';
 import 'package:cric_spot/core/extensions/color_extension.dart';
 import 'package:cric_spot/core/extensions/text_style_extensions.dart';
 import 'package:cric_spot/core/widgtes/cric_widgets/cric_text_field.dart';
-import 'package:cric_spot/main.dart';
-import 'package:cric_spot/store/score/score_store.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:go_router/go_router.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
 
 class FallOfWicketPage extends StatelessWidget {
   final String run;
@@ -17,7 +16,7 @@ class FallOfWicketPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final scoreStore = getIt.get<ScoreStore>();
+    final scoreBloc = context.read<ScoreBloc>();
     return Scaffold(
       appBar: AppBar(
         title: const Text("Fall of wicket"),
@@ -46,14 +45,14 @@ class FallOfWicketPage extends StatelessWidget {
               ),
               width: double.infinity,
               child: DropdownButtonHideUnderline(
-                child: Observer(builder: (_) {
+                child: BlocBuilder<ScoreBloc, ScoreState>(builder: (context, state) {
                   return DropdownButton(
                     borderRadius: BorderRadius.circular(12.0),
                     onChanged: (val) {
-                      scoreStore.wicketType = val!;
-                      scoreStore.supporterPlayer = '';
+                      scoreBloc.add(WicketTypeChanged(val!));
+                      scoreBloc.add(const SupporterPlayerChanged(''));
                     },
-                    value: scoreStore.wicketType,
+                    value: state.wicketType,
                     items: WicketType.values.map((e) {
                       return DropdownMenuItem<WicketType>(
                         value: e,
@@ -64,10 +63,10 @@ class FallOfWicketPage extends StatelessWidget {
                 }),
               ),
             ),
-            Observer(builder: (_) {
-              log("${scoreStore.whoGotOut} to");
+            BlocBuilder<ScoreBloc, ScoreState>(builder: (context, state) {
+              log("${state.whoGotOut} to");
 
-              return (scoreStore.wicketType == WicketType.runoutStriker || scoreStore.wicketType == WicketType.runoutNonStriker)
+              return (state.wicketType == WicketType.runoutStriker || state.wicketType == WicketType.runoutNonStriker)
                   ? Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -90,21 +89,21 @@ class FallOfWicketPage extends StatelessWidget {
                           ),
                           width: double.infinity,
                           child: DropdownButtonHideUnderline(
-                            child: Observer(builder: (_) {
+                            child: BlocBuilder<ScoreBloc, ScoreState>(builder: (context, state) {
                               return DropdownButton(
                                 borderRadius: BorderRadius.circular(12.0),
                                 onChanged: (val) {
-                                  scoreStore.whoGotOut = val!;
+                                  scoreBloc.add(WhoGotOutChanged(val!));
                                 },
-                                value: scoreStore.whoGotOut,
+                                value: state.whoGotOut,
                                 items: [
                                   DropdownMenuItem<String>(
-                                    value: scoreStore.striker!.playerId,
-                                    child: Text(scoreStore.striker!.name!),
+                                    value: state.striker!.playerId,
+                                    child: Text(state.striker!.name!),
                                   ),
                                   DropdownMenuItem<String>(
-                                    value: scoreStore.nonStriker!.playerId,
-                                    child: Text(scoreStore.nonStriker!.name!),
+                                    value: state.nonStriker!.playerId,
+                                    child: Text(state.nonStriker!.name!),
                                   )
                                 ],
                               );
@@ -115,11 +114,11 @@ class FallOfWicketPage extends StatelessWidget {
                     )
                   : const SizedBox.shrink();
             }),
-            Observer(builder: (_) {
-              return (scoreStore.wicketType == WicketType.catchOut ||
-                      scoreStore.wicketType == WicketType.runoutNonStriker ||
-                      scoreStore.wicketType == WicketType.runoutStriker ||
-                      scoreStore.wicketType == WicketType.stumpping)
+            BlocBuilder<ScoreBloc, ScoreState>(builder: (context, state) {
+              return (state.wicketType == WicketType.catchOut ||
+                      state.wicketType == WicketType.runoutNonStriker ||
+                      state.wicketType == WicketType.runoutStriker ||
+                      state.wicketType == WicketType.stumpping)
                   ? Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -127,7 +126,7 @@ class FallOfWicketPage extends StatelessWidget {
                           height: 16,
                         ),
                         Text(
-                          "${scoreStore.wicketType.name} by",
+                          "${state.wicketType.name} by",
                           style: context.titleMedium?.copyWith(fontWeight: FontWeight.w600, color: context.onBackground),
                         ),
                         const SizedBox(
@@ -139,7 +138,7 @@ class FallOfWicketPage extends StatelessWidget {
                           keyboardType: TextInputType.name,
                           textCapitalization: TextCapitalization.words,
                           onChanged: (val) {
-                            scoreStore.supporterPlayer = val;
+                            scoreBloc.add(SupporterPlayerChanged(val));
                           },
                         ),
                       ],
@@ -156,7 +155,7 @@ class FallOfWicketPage extends StatelessWidget {
             const SizedBox(
               height: 8,
             ),
-            scoreStore.totalWicket == (int.parse(scoreStore.matchData!.playerPerMatch!) - 2)
+            scoreBloc.totalWicket == (int.parse(scoreBloc.matchData!.playerPerMatch!) - 2)
                 ? const SizedBox.shrink()
                 : CricTextFormField(
                     // controller: strikerController,
@@ -164,7 +163,7 @@ class FallOfWicketPage extends StatelessWidget {
                     keyboardType: TextInputType.name,
                     textCapitalization: TextCapitalization.words,
                     onChanged: (val) {
-                      scoreStore.newBatsman = val;
+                      scoreBloc.add(NewBatsmanNameChanged(val));
                     },
                   ),
             const SizedBox(
@@ -172,15 +171,16 @@ class FallOfWicketPage extends StatelessWidget {
             ),
             SizedBox(
               width: double.infinity,
-              child: Observer(builder: (_) {
+              child: BlocBuilder<ScoreBloc, ScoreState>(builder: (context, state) {
                 return FilledButton(
-                    onPressed: scoreStore.newBatsman == ''
+                    onPressed: state.newBatsman == ''
                         ? null
                         : () async {
-                            final newPlayer = await scoreStore.fallOfWicket();
-
-                            scoreStore.countRun(run: int.parse(run), newPlayer: newPlayer);
-                            scoreStore.supporterPlayer = '';
+                            final scoreBloc = context.read<ScoreBloc>();
+                            // Create new batsman first (async Hive write), then pass to CountRun
+                            final newPlayer = await scoreBloc.createNewBatsman();
+                            scoreBloc.add(CountRun(run: int.parse(run), newPlayer: newPlayer));
+                            scoreBloc.add(const SupporterPlayerChanged(''));
                             goRouter.pop();
                           },
                     child: const Text("Done"));

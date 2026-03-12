@@ -1,10 +1,9 @@
 import 'package:cric_spot/config/routes_name.dart';
 import 'package:cric_spot/core/extensions/text_style_extensions.dart';
-import 'package:cric_spot/main.dart';
+import 'package:cric_spot/bloc/match_setup/match_setup_bloc.dart';
 import 'package:cric_spot/model/match/match_model.dart';
-import 'package:cric_spot/store/home/home_store.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
 class HistoryPage extends StatelessWidget {
@@ -12,17 +11,16 @@ class HistoryPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final homeStore = getIt.get<HomeStore>();
-    homeStore.getMatchHistory();
+    context.read<MatchSetupBloc>().add(const MatchSetupLoadHistory());
     return Scaffold(
       body: Container(
         padding: const EdgeInsets.symmetric(horizontal: 8),
-        child: Observer(builder: (_) {
+        child: BlocBuilder<MatchSetupBloc, MatchSetupState>(builder: (context, state) {
           return ListView.builder(
-              itemCount: homeStore.matchList.length,
+              itemCount: state.matchList.length,
               itemBuilder: (context, index) {
                 return matchHistoryCard(
-                    context, homeStore.matchList[index], homeStore);
+                    context, state.matchList[index]);
               });
         }),
       ),
@@ -30,7 +28,7 @@ class HistoryPage extends StatelessWidget {
   }
 
   Widget matchHistoryCard(
-      BuildContext context, MatchModel match, HomeStore homeStore) {
+      BuildContext context, MatchModel match) {
     return Card(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
       child: Container(
@@ -158,7 +156,7 @@ class HistoryPage extends StatelessWidget {
                 ),
                 IconButton(
                     onPressed: () {
-                      homeStore.removeMatch(int.parse(match.id!));
+                      context.read<MatchSetupBloc>().add(MatchSetupRemoveMatch(int.parse(match.id!)));
                     },
                     icon: const Icon(Icons.delete))
               ],

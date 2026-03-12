@@ -1,9 +1,9 @@
+import 'package:cric_spot/bloc/score/score_bloc.dart';
 import 'package:cric_spot/config/routes_name.dart';
 import 'package:cric_spot/core/extensions/color_extension.dart';
 import 'package:cric_spot/core/extensions/text_style_extensions.dart';
-import 'package:cric_spot/main.dart';
-import 'package:cric_spot/store/score/score_store.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
 class WinningPage extends StatelessWidget {
@@ -11,7 +11,7 @@ class WinningPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final scoreStore = getIt.get<ScoreStore>();
+    final scoreBloc = context.read<ScoreBloc>();
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
@@ -32,7 +32,7 @@ class WinningPage extends StatelessWidget {
               height: 16,
             ),
             Container(
-              padding: EdgeInsets.all(50),
+              padding: const EdgeInsets.all(50),
               width: MediaQuery.of(context).size.width / 1.5,
               height: MediaQuery.of(context).size.width / 1.5,
               decoration: BoxDecoration(color: context.primary, borderRadius: BorderRadius.circular(MediaQuery.of(context).size.width / 1.5)),
@@ -44,19 +44,19 @@ class WinningPage extends StatelessWidget {
             const SizedBox(
               height: 16,
             ),
-            (scoreStore.matchData!.wonName == "tie" || scoreStore.matchData!.wonName == null)
+            (scoreBloc.matchData!.wonName == "tie" || scoreBloc.matchData!.wonName == null)
                 ? const SizedBox.shrink()
                 : Text(
-                    scoreStore.matchData!.wonName ?? "",
+                    scoreBloc.matchData!.wonName ?? "",
                     style: context.headlineLarge,
                   ),
             const SizedBox(
               height: 16,
             ),
             Text(
-              scoreStore.matchData!.wonName == "tie"
+              scoreBloc.matchData!.wonName == "tie"
                   ? "Match is Tie"
-                  : "${scoreStore.matchData!.wonName ?? ""} won by ${scoreStore.matchData!.wonBy ?? ""}",
+                  : "${scoreBloc.matchData!.wonName ?? ""} won by ${scoreBloc.matchData!.wonBy ?? ""}",
               style: context.titleLarge,
             ),
           ],

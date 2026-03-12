@@ -1,11 +1,11 @@
 import 'package:animations/animations.dart';
-import 'package:cric_spot/store/home/home_store.dart';
+import 'package:cric_spot/bloc/home/home_cubit.dart';
+import 'package:cric_spot/bloc/home/home_state.dart';
 import 'package:cric_spot/ui/home/pages/history/history_page.dart';
 import 'package:cric_spot/ui/home/pages/new_match/new_match_page.dart';
 import 'package:cric_spot/ui/home/pages/team/teams_page.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ContentWidget extends StatelessWidget {
   const ContentWidget({super.key});
@@ -17,8 +17,7 @@ class ContentWidget extends StatelessWidget {
       1: TeamsPage(),
       2: const HistoryPage()
     };
-    final homeStore = Provider.of<HomeStore>(context);
-    return Observer(builder: (_) {
+    return BlocBuilder<HomeCubit, HomeState>(builder: (context, state) {
       return PageTransitionSwitcher(
         transitionBuilder: (child, primaryAnimation, secondaryAnimation) =>
             FadeThroughTransition(
@@ -27,7 +26,7 @@ class ContentWidget extends StatelessWidget {
           child: child,
         ),
         duration: const Duration(milliseconds: 300),
-        child: pages[homeStore.selectedIndex],
+        child: pages[state.selectedIndex],
       );
     });
   }
