@@ -12,6 +12,8 @@ import 'package:cric_spot/model/match/match_model.dart';
 import 'package:cric_spot/model/partnership/partnership_model.dart';
 import 'package:cric_spot/model/player/player_model.dart';
 import 'package:cric_spot/model/team/team_model.dart';
+import 'package:cric_spot/service/supabase_sync_service.dart';
+import 'package:get_it/get_it.dart';
 
 part 'match_setup_event.dart';
 part 'match_setup_state.dart';
@@ -65,6 +67,7 @@ class MatchSetupBloc extends Bloc<MatchSetupEvent, MatchSetupState> with MatchSe
     on<MatchSetupLoadHistory>(_onLoadHistory);
     on<MatchSetupRemoveMatch>(_onRemoveMatch);
     on<MatchSetupSetIsMatchNew>(_onSetIsMatchNew);
+    on<MatchSetupSetTournamentId>(_onSetTournamentId);
   }
 
   // --- Team name handlers ---
@@ -205,6 +208,13 @@ class MatchSetupBloc extends Bloc<MatchSetupEvent, MatchSetupState> with MatchSe
     Emitter<MatchSetupState> emit,
   ) {
     emit(state.copyWith(isMatchNew: event.isMatchNew));
+  }
+
+  void _onSetTournamentId(
+    MatchSetupSetTournamentId event,
+    Emitter<MatchSetupState> emit,
+  ) {
+    emit(state.copyWith(tournamentId: event.tournamentId));
   }
 
   // --- Helper: find or create team ---
@@ -449,6 +459,28 @@ class MatchSetupBloc extends Bloc<MatchSetupEvent, MatchSetupState> with MatchSe
     match.inningOneId = inningOneId.toString();
     match.inningTwoId = inningTwoId.toString();
     match.save();
+
+    // Create match in Supabase and get share code (fire-and-forget if not authenticated)
+    try {
+      final syncService = GetIt.instance.get<SupabaseSyncService>();
+      if (syncService.isAuthenticated) {
+        final remoteId = SupabaseSyncService.generateRemoteId();
+        match.remoteId = remoteId;
+        match.createdByUserId = syncService.currentUserId;
+        inningOne.remoteId = SupabaseSyncService.generateRemoteId();
+        inningTwo.remoteId = SupabaseSyncService.generateRemoteId();
+        match.save();
+        inningOne.save();
+        inningTwo.save();
+
+        final shareCode = await syncService.createMatch(match, tournamentId: state.tournamentId);
+        if (shareCode != null) {
+          match.shareCode = shareCode;
+          match.isSynced = true;
+          match.save();
+        }
+      }
+    } catch (_) {}
 
     return matchId.toString();
   }

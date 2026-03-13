@@ -64,10 +64,10 @@ _$BowlingLineUpModeImpl _$$BowlingLineUpModeImplFromJson(
     _$BowlingLineUpModeImpl(
       playerId: json['playerId'] as String?,
       name: json['name'] as String?,
-      run: json['run'] as int?,
-      ball: json['ball'] as int?,
-      wicket: json['wicket'] as int?,
-      maidan: json['maidan'] as int?,
+      run: (json['run'] as num?)?.toInt(),
+      ball: (json['ball'] as num?)?.toInt(),
+      wicket: (json['wicket'] as num?)?.toInt(),
+      maidan: (json['maidan'] as num?)?.toInt(),
     );
 
 Map<String, dynamic> _$$BowlingLineUpModeImplToJson(

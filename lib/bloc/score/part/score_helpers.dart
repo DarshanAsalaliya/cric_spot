@@ -75,5 +75,30 @@ extension ScoreHelpersExtension on ScoreBloc {
     }
     matchData!.save();
     currentInning!.save();
+
+    // Sync to Supabase (fire-and-forget, no-op if not authenticated)
+    try {
+      final syncService = GetIt.instance.get<SupabaseSyncService>();
+      syncService.syncMatchState(matchData!, inningOne, inningTwo).catchError((e) {
+        // If sync fails (e.g. offline), queue the operation
+        try {
+          final syncCubit = GetIt.instance.get<SyncCubit>();
+          if (!syncCubit.state.isConnected) {
+            syncCubit.enqueue({
+              'type': 'upsert_match',
+              'data': {
+                'id': matchData!.remoteId,
+                'first_bat_team_score': matchData!.firstBatTeamScore,
+                'first_bat_team_over': matchData!.firstBatTeamOver,
+                'second_bat_team_score': matchData!.secondBatTeamScore,
+                'second_bat_team_over': matchData!.secondBatTeamOver,
+                'status': matchData!.wonId != null ? 'completed' : 'live',
+                'updated_at': DateTime.now().toIso8601String(),
+              },
+            });
+          }
+        } catch (_) {}
+      });
+    } catch (_) {}
   }
 }

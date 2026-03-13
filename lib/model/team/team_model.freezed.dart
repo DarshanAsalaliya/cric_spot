@@ -12,7 +12,7 @@ part of 'team_model.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 TeamModel _$TeamModelFromJson(Map<String, dynamic> json) {
   return _TeamModel.fromJson(json);
@@ -40,6 +40,14 @@ mixin _$TeamModel {
   int? get loss => throw _privateConstructorUsedError;
   @HiveField(4)
   set loss(int? value) => throw _privateConstructorUsedError;
+  @HiveField(5)
+  String? get remoteId => throw _privateConstructorUsedError;
+  @HiveField(5)
+  set remoteId(String? value) => throw _privateConstructorUsedError;
+  @HiveField(6)
+  bool? get isSynced => throw _privateConstructorUsedError;
+  @HiveField(6)
+  set isSynced(bool? value) => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -57,7 +65,9 @@ abstract class $TeamModelCopyWith<$Res> {
       @HiveField(1) String? name,
       @HiveField(2) int? match,
       @HiveField(3) int? win,
-      @HiveField(4) int? loss});
+      @HiveField(4) int? loss,
+      @HiveField(5) String? remoteId,
+      @HiveField(6) bool? isSynced});
 }
 
 /// @nodoc
@@ -78,6 +88,8 @@ class _$TeamModelCopyWithImpl<$Res, $Val extends TeamModel>
     Object? match = freezed,
     Object? win = freezed,
     Object? loss = freezed,
+    Object? remoteId = freezed,
+    Object? isSynced = freezed,
   }) {
     return _then(_value.copyWith(
       id: freezed == id
@@ -100,6 +112,14 @@ class _$TeamModelCopyWithImpl<$Res, $Val extends TeamModel>
           ? _value.loss
           : loss // ignore: cast_nullable_to_non_nullable
               as int?,
+      remoteId: freezed == remoteId
+          ? _value.remoteId
+          : remoteId // ignore: cast_nullable_to_non_nullable
+              as String?,
+      isSynced: freezed == isSynced
+          ? _value.isSynced
+          : isSynced // ignore: cast_nullable_to_non_nullable
+              as bool?,
     ) as $Val);
   }
 }
@@ -117,7 +137,9 @@ abstract class _$$TeamModelImplCopyWith<$Res>
       @HiveField(1) String? name,
       @HiveField(2) int? match,
       @HiveField(3) int? win,
-      @HiveField(4) int? loss});
+      @HiveField(4) int? loss,
+      @HiveField(5) String? remoteId,
+      @HiveField(6) bool? isSynced});
 }
 
 /// @nodoc
@@ -136,6 +158,8 @@ class __$$TeamModelImplCopyWithImpl<$Res>
     Object? match = freezed,
     Object? win = freezed,
     Object? loss = freezed,
+    Object? remoteId = freezed,
+    Object? isSynced = freezed,
   }) {
     return _then(_$TeamModelImpl(
       id: freezed == id
@@ -158,6 +182,14 @@ class __$$TeamModelImplCopyWithImpl<$Res>
           ? _value.loss
           : loss // ignore: cast_nullable_to_non_nullable
               as int?,
+      remoteId: freezed == remoteId
+          ? _value.remoteId
+          : remoteId // ignore: cast_nullable_to_non_nullable
+              as String?,
+      isSynced: freezed == isSynced
+          ? _value.isSynced
+          : isSynced // ignore: cast_nullable_to_non_nullable
+              as bool?,
     ));
   }
 }
@@ -171,7 +203,9 @@ class _$TeamModelImpl extends _TeamModel {
       @HiveField(1) this.name,
       @HiveField(2) this.match,
       @HiveField(3) this.win,
-      @HiveField(4) this.loss})
+      @HiveField(4) this.loss,
+      @HiveField(5) this.remoteId,
+      @HiveField(6) this.isSynced = false})
       : super._();
 
   factory _$TeamModelImpl.fromJson(Map<String, dynamic> json) =>
@@ -192,10 +226,17 @@ class _$TeamModelImpl extends _TeamModel {
   @override
   @HiveField(4)
   int? loss;
+  @override
+  @HiveField(5)
+  String? remoteId;
+  @override
+  @JsonKey()
+  @HiveField(6)
+  bool? isSynced;
 
   @override
   String toString() {
-    return 'TeamModel(id: $id, name: $name, match: $match, win: $win, loss: $loss)';
+    return 'TeamModel(id: $id, name: $name, match: $match, win: $win, loss: $loss, remoteId: $remoteId, isSynced: $isSynced)';
   }
 
   @JsonKey(ignore: true)
@@ -218,7 +259,9 @@ abstract class _TeamModel extends TeamModel {
       @HiveField(1) String? name,
       @HiveField(2) int? match,
       @HiveField(3) int? win,
-      @HiveField(4) int? loss}) = _$TeamModelImpl;
+      @HiveField(4) int? loss,
+      @HiveField(5) String? remoteId,
+      @HiveField(6) bool? isSynced}) = _$TeamModelImpl;
   _TeamModel._() : super._();
 
   factory _TeamModel.fromJson(Map<String, dynamic> json) =
@@ -249,6 +292,16 @@ abstract class _TeamModel extends TeamModel {
   int? get loss;
   @HiveField(4)
   set loss(int? value);
+  @override
+  @HiveField(5)
+  String? get remoteId;
+  @HiveField(5)
+  set remoteId(String? value);
+  @override
+  @HiveField(6)
+  bool? get isSynced;
+  @HiveField(6)
+  set isSynced(bool? value);
   @override
   @JsonKey(ignore: true)
   _$$TeamModelImplCopyWith<_$TeamModelImpl> get copyWith =>

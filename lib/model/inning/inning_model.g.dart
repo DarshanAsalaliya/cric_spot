@@ -40,13 +40,15 @@ class InningModelAdapter extends TypeAdapter<_$InningModelImpl> {
       fallOfWicket: (fields[18] as List?)
           ?.map((dynamic e) => (e as Map).cast<String, String>())
           ?.toList(),
+      remoteId: fields[19] as String?,
+      isSynced: fields[20] as bool?,
     );
   }
 
   @override
   void write(BinaryWriter writer, _$InningModelImpl obj) {
     writer
-      ..writeByte(19)
+      ..writeByte(21)
       ..writeByte(0)
       ..write(obj.id)
       ..writeByte(1)
@@ -84,7 +86,11 @@ class InningModelAdapter extends TypeAdapter<_$InningModelImpl> {
       ..writeByte(17)
       ..write(obj.isFirstInning)
       ..writeByte(18)
-      ..write(obj.fallOfWicket);
+      ..write(obj.fallOfWicket)
+      ..writeByte(19)
+      ..write(obj.remoteId)
+      ..writeByte(20)
+      ..write(obj.isSynced);
   }
 
   @override
@@ -108,9 +114,9 @@ _$InningModelImpl _$$InningModelImplFromJson(Map<String, dynamic> json) =>
       matchId: json['matchId'] as String?,
       batTeamName: json['batTeamName'] as String?,
       bowlTeamName: json['bowlTeamName'] as String?,
-      totalRun: json['totalRun'] as int?,
-      totalWicket: json['totalWicket'] as int?,
-      totalBall: json['totalBall'] as int?,
+      totalRun: (json['totalRun'] as num?)?.toInt(),
+      totalWicket: (json['totalWicket'] as num?)?.toInt(),
+      totalBall: (json['totalBall'] as num?)?.toInt(),
       battingLineup: (json['battingLineup'] as List<dynamic>?)
           ?.map((e) => BattingLineUpModel.fromJson(e as Map<String, dynamic>))
           .toList(),
@@ -149,6 +155,8 @@ _$InningModelImpl _$$InningModelImplFromJson(Map<String, dynamic> json) =>
       fallOfWicket: (json['fallOfWicket'] as List<dynamic>?)
           ?.map((e) => Map<String, String>.from(e as Map))
           .toList(),
+      remoteId: json['remoteId'] as String?,
+      isSynced: json['isSynced'] as bool? ?? false,
     );
 
 Map<String, dynamic> _$$InningModelImplToJson(_$InningModelImpl instance) =>
@@ -172,4 +180,6 @@ Map<String, dynamic> _$$InningModelImplToJson(_$InningModelImpl instance) =>
       'currentPartnerShip': instance.currentPartnerShip,
       'isFirstInning': instance.isFirstInning,
       'fallOfWicket': instance.fallOfWicket,
+      'remoteId': instance.remoteId,
+      'isSynced': instance.isSynced,
     };

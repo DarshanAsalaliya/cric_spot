@@ -30,6 +30,7 @@ class MatchSetupState extends Equatable {
   final MatchSetupStatus status;
   final String? matchId;
   final String? errorMessage;
+  final String? tournamentId;
 
   const MatchSetupState({
     this.matchList = const [],
@@ -59,6 +60,7 @@ class MatchSetupState extends Equatable {
     this.status = MatchSetupStatus.initial,
     this.matchId,
     this.errorMessage,
+    this.tournamentId,
   });
 
   /// Determines the batting team name based on toss winner and elected option.
@@ -119,6 +121,7 @@ class MatchSetupState extends Equatable {
     MatchSetupStatus? status,
     String? Function()? matchId,
     String? Function()? errorMessage,
+    String? tournamentId,
   }) {
     return MatchSetupState(
       matchList: matchList ?? this.matchList,
@@ -157,6 +160,7 @@ class MatchSetupState extends Equatable {
       matchId: matchId != null ? matchId() : this.matchId,
       errorMessage:
           errorMessage != null ? errorMessage() : this.errorMessage,
+      tournamentId: tournamentId ?? this.tournamentId,
     );
   }
 
@@ -189,5 +193,6 @@ class MatchSetupState extends Equatable {
         status,
         matchId,
         errorMessage,
+        tournamentId,
       ];
 }

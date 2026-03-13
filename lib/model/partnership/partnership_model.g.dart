@@ -63,9 +63,9 @@ _$PartnerShipModelImpl _$$PartnerShipModelImplFromJson(
         Map<String, dynamic> json) =>
     _$PartnerShipModelImpl(
       id: json['id'] as String?,
-      run: json['run'] as int?,
-      ball: json['ball'] as int?,
-      extra: json['extra'] as int?,
+      run: (json['run'] as num?)?.toInt(),
+      ball: (json['ball'] as num?)?.toInt(),
+      extra: (json['extra'] as num?)?.toInt(),
       currentStiker: json['currentStiker'] == null
           ? null
           : BattingLineUpModel.fromJson(

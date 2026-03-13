@@ -42,13 +42,17 @@ class MatchModelAdapter extends TypeAdapter<_$MatchModelImpl> {
       inningOneId: fields[22] as String?,
       inningTwoId: fields[23] as String?,
       playerPerMatch: fields[24] as String?,
+      remoteId: fields[25] as String?,
+      isSynced: fields[26] as bool?,
+      shareCode: fields[27] as String?,
+      createdByUserId: fields[28] as String?,
     );
   }
 
   @override
   void write(BinaryWriter writer, _$MatchModelImpl obj) {
     writer
-      ..writeByte(25)
+      ..writeByte(29)
       ..writeByte(0)
       ..write(obj.id)
       ..writeByte(1)
@@ -98,7 +102,15 @@ class MatchModelAdapter extends TypeAdapter<_$MatchModelImpl> {
       ..writeByte(23)
       ..write(obj.inningTwoId)
       ..writeByte(24)
-      ..write(obj.playerPerMatch);
+      ..write(obj.playerPerMatch)
+      ..writeByte(25)
+      ..write(obj.remoteId)
+      ..writeByte(26)
+      ..write(obj.isSynced)
+      ..writeByte(27)
+      ..write(obj.shareCode)
+      ..writeByte(28)
+      ..write(obj.createdByUserId);
   }
 
   @override
@@ -122,10 +134,10 @@ _$MatchModelImpl _$$MatchModelImplFromJson(Map<String, dynamic> json) =>
       over: json['over'] as String?,
       isWideBall: json['isWideBall'] as bool?,
       isWideReball: json['isWideReball'] as bool?,
-      wideRun: json['wideRun'] as int?,
+      wideRun: (json['wideRun'] as num?)?.toInt(),
       isNoball: json['isNoball'] as bool?,
       isNoballReball: json['isNoballReball'] as bool?,
-      noballRun: json['noballRun'] as int?,
+      noballRun: (json['noballRun'] as num?)?.toInt(),
       hostTeamId: json['hostTeamId'] as String?,
       visitorTeamId: json['visitorTeamId'] as String?,
       tossId: json['tossId'] as String?,
@@ -143,6 +155,10 @@ _$MatchModelImpl _$$MatchModelImplFromJson(Map<String, dynamic> json) =>
       inningOneId: json['inningOneId'] as String?,
       inningTwoId: json['inningTwoId'] as String?,
       playerPerMatch: json['playerPerMatch'] as String?,
+      remoteId: json['remoteId'] as String?,
+      isSynced: json['isSynced'] as bool? ?? false,
+      shareCode: json['shareCode'] as String?,
+      createdByUserId: json['createdByUserId'] as String?,
     );
 
 Map<String, dynamic> _$$MatchModelImplToJson(_$MatchModelImpl instance) =>
@@ -172,4 +188,8 @@ Map<String, dynamic> _$$MatchModelImplToJson(_$MatchModelImpl instance) =>
       'inningOneId': instance.inningOneId,
       'inningTwoId': instance.inningTwoId,
       'playerPerMatch': instance.playerPerMatch,
+      'remoteId': instance.remoteId,
+      'isSynced': instance.isSynced,
+      'shareCode': instance.shareCode,
+      'createdByUserId': instance.createdByUserId,
     };

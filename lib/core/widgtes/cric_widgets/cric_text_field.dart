@@ -17,7 +17,8 @@ class CricTextFormField extends StatelessWidget {
       this.counterText,
       this.textCapitalization = TextCapitalization.sentences,
       this.focusNode,
-      this.autofillHints});
+      this.autofillHints,
+      this.obscureText = false});
 
   final String? Function(String?)? validator;
   final Function(String)? onChanged;
@@ -33,6 +34,7 @@ class CricTextFormField extends StatelessWidget {
   final TextCapitalization textCapitalization;
   final FocusNode? focusNode;
   final Iterable<String>? autofillHints;
+  final bool obscureText;
 
   @override
   Widget build(BuildContext context) {
@@ -40,11 +42,12 @@ class CricTextFormField extends StatelessWidget {
       autofillHints: autofillHints,
       focusNode: focusNode,
       maxLength: maxLength,
-      maxLines: maxLines,
+      maxLines: obscureText ? 1 : maxLines,
       enabled: enabled,
       controller: controller,
       keyboardType: keyboardType,
       textCapitalization: textCapitalization,
+      obscureText: obscureText,
       decoration: InputDecoration(
         counterText: "",
         hintText: hintText,

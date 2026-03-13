@@ -124,3 +124,10 @@ class MatchSetupSetIsMatchNew extends MatchSetupEvent {
   final bool isMatchNew;
   const MatchSetupSetIsMatchNew(this.isMatchNew);
 }
+
+// --- Tournament Context ---
+
+class MatchSetupSetTournamentId extends MatchSetupEvent {
+  final String? tournamentId;
+  const MatchSetupSetTournamentId(this.tournamentId);
+}

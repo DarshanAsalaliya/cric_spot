@@ -61,12 +61,12 @@ class ExtraRunModelAdapter extends TypeAdapter<_$ExtraRunModelImpl> {
 
 _$ExtraRunModelImpl _$$ExtraRunModelImplFromJson(Map<String, dynamic> json) =>
     _$ExtraRunModelImpl(
-      wide: json['wide'] as int?,
-      noBall: json['noBall'] as int?,
-      legBy: json['legBy'] as int?,
-      by: json['by'] as int?,
-      penlaty: json['penlaty'] as int?,
-      total: json['total'] as int?,
+      wide: (json['wide'] as num?)?.toInt(),
+      noBall: (json['noBall'] as num?)?.toInt(),
+      legBy: (json['legBy'] as num?)?.toInt(),
+      by: (json['by'] as num?)?.toInt(),
+      penlaty: (json['penlaty'] as num?)?.toInt(),
+      total: (json['total'] as num?)?.toInt(),
     );
 
 Map<String, dynamic> _$$ExtraRunModelImplToJson(_$ExtraRunModelImpl instance) =>

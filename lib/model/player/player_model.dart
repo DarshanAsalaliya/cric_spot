@@ -10,6 +10,8 @@ class PlayerModel extends HiveObject with _$PlayerModel {
   factory PlayerModel({
     @HiveField(0) String? id,
     @HiveField(1) String? name,
+    @HiveField(2) String? remoteId,
+    @HiveField(3) @Default(false) bool? isSynced,
   }) = _PlayerModel;
   PlayerModel._();
 

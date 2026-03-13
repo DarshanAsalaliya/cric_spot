@@ -12,7 +12,7 @@ part of 'player_model.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 PlayerModel _$PlayerModelFromJson(Map<String, dynamic> json) {
   return _PlayerModel.fromJson(json);
@@ -28,6 +28,14 @@ mixin _$PlayerModel {
   String? get name => throw _privateConstructorUsedError;
   @HiveField(1)
   set name(String? value) => throw _privateConstructorUsedError;
+  @HiveField(2)
+  String? get remoteId => throw _privateConstructorUsedError;
+  @HiveField(2)
+  set remoteId(String? value) => throw _privateConstructorUsedError;
+  @HiveField(3)
+  bool? get isSynced => throw _privateConstructorUsedError;
+  @HiveField(3)
+  set isSynced(bool? value) => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -41,7 +49,11 @@ abstract class $PlayerModelCopyWith<$Res> {
           PlayerModel value, $Res Function(PlayerModel) then) =
       _$PlayerModelCopyWithImpl<$Res, PlayerModel>;
   @useResult
-  $Res call({@HiveField(0) String? id, @HiveField(1) String? name});
+  $Res call(
+      {@HiveField(0) String? id,
+      @HiveField(1) String? name,
+      @HiveField(2) String? remoteId,
+      @HiveField(3) bool? isSynced});
 }
 
 /// @nodoc
@@ -59,6 +71,8 @@ class _$PlayerModelCopyWithImpl<$Res, $Val extends PlayerModel>
   $Res call({
     Object? id = freezed,
     Object? name = freezed,
+    Object? remoteId = freezed,
+    Object? isSynced = freezed,
   }) {
     return _then(_value.copyWith(
       id: freezed == id
@@ -69,6 +83,14 @@ class _$PlayerModelCopyWithImpl<$Res, $Val extends PlayerModel>
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String?,
+      remoteId: freezed == remoteId
+          ? _value.remoteId
+          : remoteId // ignore: cast_nullable_to_non_nullable
+              as String?,
+      isSynced: freezed == isSynced
+          ? _value.isSynced
+          : isSynced // ignore: cast_nullable_to_non_nullable
+              as bool?,
     ) as $Val);
   }
 }
@@ -81,7 +103,11 @@ abstract class _$$PlayerModelImplCopyWith<$Res>
       __$$PlayerModelImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({@HiveField(0) String? id, @HiveField(1) String? name});
+  $Res call(
+      {@HiveField(0) String? id,
+      @HiveField(1) String? name,
+      @HiveField(2) String? remoteId,
+      @HiveField(3) bool? isSynced});
 }
 
 /// @nodoc
@@ -97,6 +123,8 @@ class __$$PlayerModelImplCopyWithImpl<$Res>
   $Res call({
     Object? id = freezed,
     Object? name = freezed,
+    Object? remoteId = freezed,
+    Object? isSynced = freezed,
   }) {
     return _then(_$PlayerModelImpl(
       id: freezed == id
@@ -107,6 +135,14 @@ class __$$PlayerModelImplCopyWithImpl<$Res>
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String?,
+      remoteId: freezed == remoteId
+          ? _value.remoteId
+          : remoteId // ignore: cast_nullable_to_non_nullable
+              as String?,
+      isSynced: freezed == isSynced
+          ? _value.isSynced
+          : isSynced // ignore: cast_nullable_to_non_nullable
+              as bool?,
     ));
   }
 }
@@ -115,7 +151,11 @@ class __$$PlayerModelImplCopyWithImpl<$Res>
 @JsonSerializable()
 @HiveType(typeId: 1, adapterName: 'PlayerModelAdapter')
 class _$PlayerModelImpl extends _PlayerModel {
-  _$PlayerModelImpl({@HiveField(0) this.id, @HiveField(1) this.name})
+  _$PlayerModelImpl(
+      {@HiveField(0) this.id,
+      @HiveField(1) this.name,
+      @HiveField(2) this.remoteId,
+      @HiveField(3) this.isSynced = false})
       : super._();
 
   factory _$PlayerModelImpl.fromJson(Map<String, dynamic> json) =>
@@ -127,10 +167,17 @@ class _$PlayerModelImpl extends _PlayerModel {
   @override
   @HiveField(1)
   String? name;
+  @override
+  @HiveField(2)
+  String? remoteId;
+  @override
+  @JsonKey()
+  @HiveField(3)
+  bool? isSynced;
 
   @override
   String toString() {
-    return 'PlayerModel(id: $id, name: $name)';
+    return 'PlayerModel(id: $id, name: $name, remoteId: $remoteId, isSynced: $isSynced)';
   }
 
   @JsonKey(ignore: true)
@@ -148,8 +195,11 @@ class _$PlayerModelImpl extends _PlayerModel {
 }
 
 abstract class _PlayerModel extends PlayerModel {
-  factory _PlayerModel({@HiveField(0) String? id, @HiveField(1) String? name}) =
-      _$PlayerModelImpl;
+  factory _PlayerModel(
+      {@HiveField(0) String? id,
+      @HiveField(1) String? name,
+      @HiveField(2) String? remoteId,
+      @HiveField(3) bool? isSynced}) = _$PlayerModelImpl;
   _PlayerModel._() : super._();
 
   factory _PlayerModel.fromJson(Map<String, dynamic> json) =
@@ -165,6 +215,16 @@ abstract class _PlayerModel extends PlayerModel {
   String? get name;
   @HiveField(1)
   set name(String? value);
+  @override
+  @HiveField(2)
+  String? get remoteId;
+  @HiveField(2)
+  set remoteId(String? value);
+  @override
+  @HiveField(3)
+  bool? get isSynced;
+  @HiveField(3)
+  set isSynced(bool? value);
   @override
   @JsonKey(ignore: true)
   _$$PlayerModelImplCopyWith<_$PlayerModelImpl> get copyWith =>

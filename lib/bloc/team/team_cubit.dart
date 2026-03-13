@@ -1,6 +1,8 @@
 import 'package:cric_spot/bloc/team/team_state.dart';
 import 'package:cric_spot/model/team/team_model.dart';
+import 'package:cric_spot/service/supabase_sync_service.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get_it/get_it.dart';
 import 'package:hive/hive.dart';
 
 class TeamCubit extends Cubit<TeamState> {
@@ -13,6 +15,12 @@ class TeamCubit extends Cubit<TeamState> {
     team.id = id.toString();
     team.save();
     loadTeams();
+
+    // Sync to Supabase
+    try {
+      final syncService = GetIt.instance.get<SupabaseSyncService>();
+      syncService.syncTeam(team);
+    } catch (_) {}
   }
 
   void loadTeams() {
@@ -30,5 +38,11 @@ class TeamCubit extends Cubit<TeamState> {
   void updateTeam(TeamModel team) {
     team.save();
     loadTeams();
+
+    // Sync to Supabase
+    try {
+      final syncService = GetIt.instance.get<SupabaseSyncService>();
+      syncService.syncTeam(team);
+    } catch (_) {}
   }
 }

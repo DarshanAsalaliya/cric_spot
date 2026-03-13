@@ -10,7 +10,10 @@ import 'package:cric_spot/model/match/match_model.dart';
 import 'package:cric_spot/model/partnership/partnership_model.dart';
 import 'package:cric_spot/model/player/player_model.dart';
 import 'package:cric_spot/model/team/team_model.dart';
+import 'package:cric_spot/bloc/sync/sync_cubit.dart';
+import 'package:cric_spot/service/supabase_sync_service.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get_it/get_it.dart';
 import 'package:hive/hive.dart';
 
 part 'score_state.dart';

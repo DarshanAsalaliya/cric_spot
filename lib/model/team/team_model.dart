@@ -13,6 +13,8 @@ class TeamModel extends HiveObject with _$TeamModel {
     @HiveField(2) int? match,
     @HiveField(3) int? win,
     @HiveField(4) int? loss,
+    @HiveField(5) String? remoteId,
+    @HiveField(6) @Default(false) bool? isSynced,
   }) = _TeamModel;
 
   TeamModel._();

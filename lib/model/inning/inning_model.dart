@@ -31,6 +31,8 @@ class InningModel extends HiveObject with _$InningModel {
     @HiveField(16) PartnerShipModel? currentPartnerShip,
     @HiveField(17) bool? isFirstInning,
     @HiveField(18) List<Map<String, String>>? fallOfWicket,
+    @HiveField(19) String? remoteId,
+    @HiveField(20) @Default(false) bool? isSynced,
   }) = _InningModel;
   InningModel._();
 

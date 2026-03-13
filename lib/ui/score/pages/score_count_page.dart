@@ -83,6 +83,31 @@ class _ScoreCountPageState extends State<ScoreCountPage> {
                         },
                         icon: Icon(Icons.arrow_back)),
                     actions: [
+                      if (scoreBloc.matchData?.shareCode != null)
+                        IconButton(
+                            onPressed: () {
+                              final code = scoreBloc.matchData!.shareCode!;
+                              showDialog(
+                                context: context,
+                                builder: (ctx) => AlertDialog(
+                                  title: const Text('Share Code'),
+                                  content: SelectableText(
+                                    code,
+                                    style: const TextStyle(fontSize: 32, fontWeight: FontWeight.bold, letterSpacing: 4),
+                                    textAlign: TextAlign.center,
+                                  ),
+                                  actions: [
+                                    TextButton(
+                                      onPressed: () => Navigator.pop(ctx),
+                                      child: const Text('Close'),
+                                    ),
+                                  ],
+                                ),
+                              );
+                            },
+                            icon: Icon(Icons.share),
+                            tooltip: 'Share Live Code',
+                        ),
                       IconButton(
                           onPressed: () {
                             GoRouter.of(context).pushNamed(RoutesName.scoreBoard.name, pathParameters: {"matchId": widget.matchId});

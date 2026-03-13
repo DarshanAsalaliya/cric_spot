@@ -19,8 +19,7 @@ mixin MatchSetupValidationMixin on Bloc<MatchSetupEvent, MatchSetupState> {
     if (state.over.isEmpty) {
       overErr = 'This field is required';
     }
-    if (state.hostTeamName == state.visitorTeamName &&
-        state.hostTeamName.isNotEmpty) {
+    if (state.hostTeamName == state.visitorTeamName && state.hostTeamName.isNotEmpty) {
       visitorError = 'Both team should be diffrent';
     }
 

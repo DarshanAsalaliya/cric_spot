@@ -19,17 +19,23 @@ class PlayerModelAdapter extends TypeAdapter<_$PlayerModelImpl> {
     return _$PlayerModelImpl(
       id: fields[0] as String?,
       name: fields[1] as String?,
+      remoteId: fields[2] as String?,
+      isSynced: fields[3] as bool?,
     );
   }
 
   @override
   void write(BinaryWriter writer, _$PlayerModelImpl obj) {
     writer
-      ..writeByte(2)
+      ..writeByte(4)
       ..writeByte(0)
       ..write(obj.id)
       ..writeByte(1)
-      ..write(obj.name);
+      ..write(obj.name)
+      ..writeByte(2)
+      ..write(obj.remoteId)
+      ..writeByte(3)
+      ..write(obj.isSynced);
   }
 
   @override
@@ -51,10 +57,14 @@ _$PlayerModelImpl _$$PlayerModelImplFromJson(Map<String, dynamic> json) =>
     _$PlayerModelImpl(
       id: json['id'] as String?,
       name: json['name'] as String?,
+      remoteId: json['remoteId'] as String?,
+      isSynced: json['isSynced'] as bool? ?? false,
     );
 
 Map<String, dynamic> _$$PlayerModelImplToJson(_$PlayerModelImpl instance) =>
     <String, dynamic>{
       'id': instance.id,
       'name': instance.name,
+      'remoteId': instance.remoteId,
+      'isSynced': instance.isSynced,
     };

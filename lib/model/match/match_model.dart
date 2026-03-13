@@ -33,6 +33,10 @@ class MatchModel extends HiveObject with _$MatchModel {
     @HiveField(22) String? inningOneId,
     @HiveField(23) String? inningTwoId,
     @HiveField(24) String? playerPerMatch,
+    @HiveField(25) String? remoteId,
+    @HiveField(26) @Default(false) bool? isSynced,
+    @HiveField(27) String? shareCode,
+    @HiveField(28) String? createdByUserId,
   }) = _MatchModel;
   MatchModel._();
 

@@ -1,3 +1,5 @@
+import 'package:cric_spot/bloc/auth/auth_cubit.dart';
+import 'package:cric_spot/bloc/sync/sync_cubit.dart';
 import 'package:cric_spot/bloc/home/home_cubit.dart';
 import 'package:cric_spot/bloc/match_setup/match_setup_bloc.dart';
 import 'package:cric_spot/bloc/score/score_bloc.dart';
@@ -18,6 +20,8 @@ class CricSpotApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
         providers: [
+          BlocProvider.value(value: getIt.get<AuthCubit>()),
+          BlocProvider.value(value: getIt.get<SyncCubit>()),
           BlocProvider.value(value: getIt.get<HomeCubit>()),
           BlocProvider.value(value: getIt.get<TeamCubit>()),
           BlocProvider.value(value: getIt.get<MatchSetupBloc>()),

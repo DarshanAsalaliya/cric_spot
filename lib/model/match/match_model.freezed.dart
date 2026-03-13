@@ -12,7 +12,7 @@ part of 'match_model.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 MatchModel _$MatchModelFromJson(Map<String, dynamic> json) {
   return _MatchModel.fromJson(json);
@@ -120,6 +120,22 @@ mixin _$MatchModel {
   String? get playerPerMatch => throw _privateConstructorUsedError;
   @HiveField(24)
   set playerPerMatch(String? value) => throw _privateConstructorUsedError;
+  @HiveField(25)
+  String? get remoteId => throw _privateConstructorUsedError;
+  @HiveField(25)
+  set remoteId(String? value) => throw _privateConstructorUsedError;
+  @HiveField(26)
+  bool? get isSynced => throw _privateConstructorUsedError;
+  @HiveField(26)
+  set isSynced(bool? value) => throw _privateConstructorUsedError;
+  @HiveField(27)
+  String? get shareCode => throw _privateConstructorUsedError;
+  @HiveField(27)
+  set shareCode(String? value) => throw _privateConstructorUsedError;
+  @HiveField(28)
+  String? get createdByUserId => throw _privateConstructorUsedError;
+  @HiveField(28)
+  set createdByUserId(String? value) => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -158,7 +174,11 @@ abstract class $MatchModelCopyWith<$Res> {
       @HiveField(21) String? secondBatTeamOver,
       @HiveField(22) String? inningOneId,
       @HiveField(23) String? inningTwoId,
-      @HiveField(24) String? playerPerMatch});
+      @HiveField(24) String? playerPerMatch,
+      @HiveField(25) String? remoteId,
+      @HiveField(26) bool? isSynced,
+      @HiveField(27) String? shareCode,
+      @HiveField(28) String? createdByUserId});
 }
 
 /// @nodoc
@@ -199,6 +219,10 @@ class _$MatchModelCopyWithImpl<$Res, $Val extends MatchModel>
     Object? inningOneId = freezed,
     Object? inningTwoId = freezed,
     Object? playerPerMatch = freezed,
+    Object? remoteId = freezed,
+    Object? isSynced = freezed,
+    Object? shareCode = freezed,
+    Object? createdByUserId = freezed,
   }) {
     return _then(_value.copyWith(
       id: freezed == id
@@ -301,6 +325,22 @@ class _$MatchModelCopyWithImpl<$Res, $Val extends MatchModel>
           ? _value.playerPerMatch
           : playerPerMatch // ignore: cast_nullable_to_non_nullable
               as String?,
+      remoteId: freezed == remoteId
+          ? _value.remoteId
+          : remoteId // ignore: cast_nullable_to_non_nullable
+              as String?,
+      isSynced: freezed == isSynced
+          ? _value.isSynced
+          : isSynced // ignore: cast_nullable_to_non_nullable
+              as bool?,
+      shareCode: freezed == shareCode
+          ? _value.shareCode
+          : shareCode // ignore: cast_nullable_to_non_nullable
+              as String?,
+      createdByUserId: freezed == createdByUserId
+          ? _value.createdByUserId
+          : createdByUserId // ignore: cast_nullable_to_non_nullable
+              as String?,
     ) as $Val);
   }
 }
@@ -338,7 +378,11 @@ abstract class _$$MatchModelImplCopyWith<$Res>
       @HiveField(21) String? secondBatTeamOver,
       @HiveField(22) String? inningOneId,
       @HiveField(23) String? inningTwoId,
-      @HiveField(24) String? playerPerMatch});
+      @HiveField(24) String? playerPerMatch,
+      @HiveField(25) String? remoteId,
+      @HiveField(26) bool? isSynced,
+      @HiveField(27) String? shareCode,
+      @HiveField(28) String? createdByUserId});
 }
 
 /// @nodoc
@@ -377,6 +421,10 @@ class __$$MatchModelImplCopyWithImpl<$Res>
     Object? inningOneId = freezed,
     Object? inningTwoId = freezed,
     Object? playerPerMatch = freezed,
+    Object? remoteId = freezed,
+    Object? isSynced = freezed,
+    Object? shareCode = freezed,
+    Object? createdByUserId = freezed,
   }) {
     return _then(_$MatchModelImpl(
       id: freezed == id
@@ -479,6 +527,22 @@ class __$$MatchModelImplCopyWithImpl<$Res>
           ? _value.playerPerMatch
           : playerPerMatch // ignore: cast_nullable_to_non_nullable
               as String?,
+      remoteId: freezed == remoteId
+          ? _value.remoteId
+          : remoteId // ignore: cast_nullable_to_non_nullable
+              as String?,
+      isSynced: freezed == isSynced
+          ? _value.isSynced
+          : isSynced // ignore: cast_nullable_to_non_nullable
+              as bool?,
+      shareCode: freezed == shareCode
+          ? _value.shareCode
+          : shareCode // ignore: cast_nullable_to_non_nullable
+              as String?,
+      createdByUserId: freezed == createdByUserId
+          ? _value.createdByUserId
+          : createdByUserId // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -512,7 +576,11 @@ class _$MatchModelImpl extends _MatchModel {
       @HiveField(21) this.secondBatTeamOver,
       @HiveField(22) this.inningOneId,
       @HiveField(23) this.inningTwoId,
-      @HiveField(24) this.playerPerMatch})
+      @HiveField(24) this.playerPerMatch,
+      @HiveField(25) this.remoteId,
+      @HiveField(26) this.isSynced = false,
+      @HiveField(27) this.shareCode,
+      @HiveField(28) this.createdByUserId})
       : super._();
 
   factory _$MatchModelImpl.fromJson(Map<String, dynamic> json) =>
@@ -593,10 +661,23 @@ class _$MatchModelImpl extends _MatchModel {
   @override
   @HiveField(24)
   String? playerPerMatch;
+  @override
+  @HiveField(25)
+  String? remoteId;
+  @override
+  @JsonKey()
+  @HiveField(26)
+  bool? isSynced;
+  @override
+  @HiveField(27)
+  String? shareCode;
+  @override
+  @HiveField(28)
+  String? createdByUserId;
 
   @override
   String toString() {
-    return 'MatchModel(id: $id, over: $over, isWideBall: $isWideBall, isWideReball: $isWideReball, wideRun: $wideRun, isNoball: $isNoball, isNoballReball: $isNoballReball, noballRun: $noballRun, hostTeamId: $hostTeamId, visitorTeamId: $visitorTeamId, tossId: $tossId, tossName: $tossName, tossElect: $tossElect, wonId: $wonId, wonName: $wonName, wonBy: $wonBy, firstBatTeamName: $firstBatTeamName, firstBatTeamScore: $firstBatTeamScore, firstBatTeamOver: $firstBatTeamOver, secondBatTeamName: $secondBatTeamName, secondBatTeamScore: $secondBatTeamScore, secondBatTeamOver: $secondBatTeamOver, inningOneId: $inningOneId, inningTwoId: $inningTwoId, playerPerMatch: $playerPerMatch)';
+    return 'MatchModel(id: $id, over: $over, isWideBall: $isWideBall, isWideReball: $isWideReball, wideRun: $wideRun, isNoball: $isNoball, isNoballReball: $isNoballReball, noballRun: $noballRun, hostTeamId: $hostTeamId, visitorTeamId: $visitorTeamId, tossId: $tossId, tossName: $tossName, tossElect: $tossElect, wonId: $wonId, wonName: $wonName, wonBy: $wonBy, firstBatTeamName: $firstBatTeamName, firstBatTeamScore: $firstBatTeamScore, firstBatTeamOver: $firstBatTeamOver, secondBatTeamName: $secondBatTeamName, secondBatTeamScore: $secondBatTeamScore, secondBatTeamOver: $secondBatTeamOver, inningOneId: $inningOneId, inningTwoId: $inningTwoId, playerPerMatch: $playerPerMatch, remoteId: $remoteId, isSynced: $isSynced, shareCode: $shareCode, createdByUserId: $createdByUserId)';
   }
 
   @JsonKey(ignore: true)
@@ -639,7 +720,11 @@ abstract class _MatchModel extends MatchModel {
       @HiveField(21) String? secondBatTeamOver,
       @HiveField(22) String? inningOneId,
       @HiveField(23) String? inningTwoId,
-      @HiveField(24) String? playerPerMatch}) = _$MatchModelImpl;
+      @HiveField(24) String? playerPerMatch,
+      @HiveField(25) String? remoteId,
+      @HiveField(26) bool? isSynced,
+      @HiveField(27) String? shareCode,
+      @HiveField(28) String? createdByUserId}) = _$MatchModelImpl;
   _MatchModel._() : super._();
 
   factory _MatchModel.fromJson(Map<String, dynamic> json) =
@@ -770,6 +855,26 @@ abstract class _MatchModel extends MatchModel {
   String? get playerPerMatch;
   @HiveField(24)
   set playerPerMatch(String? value);
+  @override
+  @HiveField(25)
+  String? get remoteId;
+  @HiveField(25)
+  set remoteId(String? value);
+  @override
+  @HiveField(26)
+  bool? get isSynced;
+  @HiveField(26)
+  set isSynced(bool? value);
+  @override
+  @HiveField(27)
+  String? get shareCode;
+  @HiveField(27)
+  set shareCode(String? value);
+  @override
+  @HiveField(28)
+  String? get createdByUserId;
+  @HiveField(28)
+  set createdByUserId(String? value);
   @override
   @JsonKey(ignore: true)
   _$$MatchModelImplCopyWith<_$MatchModelImpl> get copyWith =>

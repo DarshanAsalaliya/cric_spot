@@ -22,13 +22,15 @@ class TeamModelAdapter extends TypeAdapter<_$TeamModelImpl> {
       match: fields[2] as int?,
       win: fields[3] as int?,
       loss: fields[4] as int?,
+      remoteId: fields[5] as String?,
+      isSynced: fields[6] as bool?,
     );
   }
 
   @override
   void write(BinaryWriter writer, _$TeamModelImpl obj) {
     writer
-      ..writeByte(5)
+      ..writeByte(7)
       ..writeByte(0)
       ..write(obj.id)
       ..writeByte(1)
@@ -38,7 +40,11 @@ class TeamModelAdapter extends TypeAdapter<_$TeamModelImpl> {
       ..writeByte(3)
       ..write(obj.win)
       ..writeByte(4)
-      ..write(obj.loss);
+      ..write(obj.loss)
+      ..writeByte(5)
+      ..write(obj.remoteId)
+      ..writeByte(6)
+      ..write(obj.isSynced);
   }
 
   @override
@@ -60,9 +66,11 @@ _$TeamModelImpl _$$TeamModelImplFromJson(Map<String, dynamic> json) =>
     _$TeamModelImpl(
       id: json['id'] as String?,
       name: json['name'] as String?,
-      match: json['match'] as int?,
-      win: json['win'] as int?,
-      loss: json['loss'] as int?,
+      match: (json['match'] as num?)?.toInt(),
+      win: (json['win'] as num?)?.toInt(),
+      loss: (json['loss'] as num?)?.toInt(),
+      remoteId: json['remoteId'] as String?,
+      isSynced: json['isSynced'] as bool? ?? false,
     );
 
 Map<String, dynamic> _$$TeamModelImplToJson(_$TeamModelImpl instance) =>
@@ -72,4 +80,6 @@ Map<String, dynamic> _$$TeamModelImplToJson(_$TeamModelImpl instance) =>
       'match': instance.match,
       'win': instance.win,
       'loss': instance.loss,
+      'remoteId': instance.remoteId,
+      'isSynced': instance.isSynced,
     };

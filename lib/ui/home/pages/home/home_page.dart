@@ -1,10 +1,14 @@
+import 'package:cric_spot/bloc/auth/auth_cubit.dart';
+import 'package:cric_spot/bloc/auth/auth_state.dart';
 import 'package:cric_spot/bloc/home/home_cubit.dart';
 import 'package:cric_spot/bloc/home/home_state.dart';
+import 'package:cric_spot/config/routes_name.dart';
 import 'package:cric_spot/core/enum/page_type.dart';
 import 'package:cric_spot/core/extensions/color_extension.dart';
 import 'package:cric_spot/ui/home/widgets/content_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 
 final GlobalKey<ScaffoldState> _scaffoldStateKey = GlobalKey<ScaffoldState>();
 
@@ -33,7 +37,40 @@ class HomePage extends StatelessWidget {
       appBar: AppBar(
         title: const Text("Crick Spot"),
         actions: [
-          IconButton(onPressed: () {}, icon: const Icon(Icons.settings)),
+          IconButton(
+            onPressed: () {
+              GoRouter.of(context).push(RoutesName.tournamentList.path);
+            },
+            icon: const Icon(Icons.emoji_events_outlined),
+            tooltip: 'Tournaments',
+          ),
+          IconButton(
+            onPressed: () {
+              GoRouter.of(context).push(RoutesName.joinLive.path);
+            },
+            icon: const Icon(Icons.live_tv),
+            tooltip: 'Watch Live',
+          ),
+          BlocBuilder<AuthCubit, AuthState>(
+            builder: (context, state) {
+              if (state.isAuthenticated) {
+                return IconButton(
+                  onPressed: () {
+                    GoRouter.of(context).push(RoutesName.userProfile.path);
+                  },
+                  icon: const Icon(Icons.account_circle),
+                  tooltip: 'Profile',
+                );
+              }
+              return IconButton(
+                onPressed: () {
+                  GoRouter.of(context).push(RoutesName.login.path);
+                },
+                icon: const Icon(Icons.login),
+                tooltip: 'Sign In',
+              );
+            },
+          ),
           const SizedBox(
             width: 8,
           )
